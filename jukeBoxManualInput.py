@@ -84,18 +84,51 @@ GPIO.setup(OUT_PIN_POWER, GPIO.OUT, initial=GPIO.HIGH)
 #mpd_client = mpd.MPDClient()
 #print("...done")
 
+##########################################
+# some internal gpio functions
+# begin
+##########################################
+def gpioCleanup():
+    """
+    just cleans the GPIO
+    """
+    print()
+    print("---------- BEGIN ---- gpioCleanup() ------------")
+    print("cleaning up...")
+    GPIO.cleanup()
+    print("... clean")
+    print("---------- END   ---- gpioCleanup() ------------")
+##########################################
+# some internal gpio functions
+# end
+##########################################
 
-def close_mpd_connection(client):
+
+##########################################
+# some internal mpd functions
+# end
+##########################################
+def mpdCloseConnection(client):
     """
-    Closes an MPDClient connection.
+    Closes the MPDClient connection.
     """
-    client.stop()
+    #client.stop()
     #client.close()
     #client.disconnect()
+    print()
+    print("---------- BEGIN ---- mpdCloseConnection(client) ------------")
+    print("killing mpd... ")
     client.kill()
+    print("... mpd has been killed successfully!")
+    print("---------- END   ---- mpdCloseConnection(client) ------------")
 
-def init_mpd_connection():
-    print("traying to connect to mpd...")
+def mpdInitConnection():
+    """
+    Initializes a MPDClient connection.
+    """
+    print()
+    print("---------- BEGIN ---- mpdCloseConnection(client) ------------")
+    print("trying to connect to mpd...")
     mpd_client = mpd.MPDClient()
     #print(mpd_client.status()['state'])
     connected = False
@@ -125,6 +158,7 @@ def init_mpd_connection():
     print("mpd connected")
 
     print(mpd_client.status()['state'])
+    print("---------- END   ---- mpdCloseConnection(client) ------------")
 
 def mpdNumberOfSongsInPlaylist(client):
     playlistLength = int(client.status()['playlistlength'])
@@ -160,6 +194,12 @@ def mpdActualPlaylistSongNumber(client):
     actualSongNumberInPlaylist = 1 + int(client.status()['song'])
     #print("actualSongNumberInPlaylist: " + str(actualSongNumberInPlaylist))
     return actualSongNumberInPlaylist
+##########################################
+# some internal mpd functions
+# end
+##########################################
+
+
 
 ##########################################
 # callback functions for the buttons
@@ -236,7 +276,7 @@ GPIO.add_event_detect(IN_PIN_TOGGLE_PLAY_PAUSE, GPIO.RISING, callback=mpdPlayPau
 
 
 
-mpd_client = init_mpd_connection()
+mpd_client = mpdInitConnection()
 print("trying to clear...")
 mpd_client.clear()
 print("...done")
@@ -310,7 +350,10 @@ while (True):
             loadNewPlaylist = True
             continue
         else:
-            close_mpd_connection(mpd_client)
+            print("GPIO.cleanup()...")
+            GPIO.cleanup()
+            print("GPIO.cleanup()... done")
+            mpdCloseConnection(mpd_client)
             break
         print ("mpd status " + str(mpd_client.status()))
 #    except:
@@ -321,5 +364,5 @@ while (True):
         GPIO.cleanup()
         print("GPIO.cleanup()... done")
         print("close_mpd_connection()...")
-        close_mpd_connection(mpd_client)
+        mpdCloseConnection(mpd_client)
         print("close_mpd_connection()... done")
