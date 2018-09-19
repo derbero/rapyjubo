@@ -161,7 +161,12 @@ def mpdActualPlaylistSongNumber(client):
     #print("actualSongNumberInPlaylist: " + str(actualSongNumberInPlaylist))
     return actualSongNumberInPlaylist
 
+##########################################
+# callback functions for the buttons
+# begin
+##########################################
 def mpdVolumeUp(channel):
+    print("---------- BEGIN ---- mpdVolumeUp ------------")
     # set volume to +10
     if (int(mpd_client.status()['volume']) <= 90):
         mpd_client.setvol(int(mpd_client.status()['volume']) + 10)
@@ -197,6 +202,10 @@ def mpdPrevious(channel):
         print ("player has gone to previous song " + str(mpd_client.status()['song']))
     else:
         print("no previous song in playlist. staying with actual song: " + str(mpd_client.status()['song']))
+##########################################
+# callback functions for the buttons
+# end
+##########################################
 
 def mpdLoadAndPlayPlaylist(playlistId):
     try:
