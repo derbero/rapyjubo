@@ -187,18 +187,23 @@ def mpdPrevious(channel):
 
 def mpdLoadAndPlayPlaylist(playlistId):
     try:
-        print("trying to load playlist..." + str(playlistId))
-        mpd_client.load(str(playlistId))
-        print("... playlist " + str(playlistId) + " loaded successfully")
+        print("trying to clear playlist ...")
+        mpd_client.clear()
+        print("... playlist cleared")
         try:
-            print("trying to start playing ...")
-            mpd_client.play(0)
-            print("... playing")
+            print("trying to load playlist..." + str(playlistId))
+            mpd_client.load(str(playlistId))
+            print("... playlist " + str(playlistId) + " loaded successfully")
+            try:
+                print("trying to start playing ...")
+                mpd_client.play(0)
+                print("... playing")
+            except:
+                print("... error while trying to play")
         except:
-            print("... error while trying to play")
+            print("... error while loading playlist")
     except:
-        print("... error while loading playlist")
-
+        print("... error while clearing playlist")
 
 
 GPIO.add_event_detect(IN_PIN_VOLUME_UP, GPIO.RISING, callback=mpdVolumeUp, bouncetime=200)  # add rising edge detection on a channel
