@@ -127,7 +127,7 @@ def init_mpd_connection():
     print(mpd_client.status()['state'])
 
 def mpdNumberOfSongsInPlaylist(client):
-    playlistLength = int(client.status['playlistlength'])
+    playlistLength = int(client.status()['playlistlength'])
     return playlistLength
 
 def mpdPlaylistHasPreviousSong(client):
@@ -145,7 +145,7 @@ def mpdPlaylistHasNextSong(client):
     return hasNextSong
 
 def mpdActualPlaylistSongNumber(client):
-    actualSongNumberInPlaylist = int(client.status['song'])
+    actualSongNumberInPlaylist = int(client.status()['song'])
 
 
 def mpdVolumeUp(channel):
