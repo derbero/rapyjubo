@@ -145,7 +145,7 @@ def mpdPlaylistHasNextSong(client):
     return hasNextSong
 
 def mpdActualPlaylistSongNumber(client):
-    actualSongNumberInPlaylist = int(client.status()['song'])
+    actualSongNumberInPlaylist = 1 + int(client.status()['song'])
 
 
 def mpdVolumeUp(channel):
