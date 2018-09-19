@@ -231,7 +231,7 @@ while (True):
 #            mpd_client.VolumeUp();
 #            print('IN_PIN_VOLUME_UP button pressed')
         # ...
-        rfid_input = input('Enter your input:')
+        rfid_input = str(input('Enter your input:'))
         mpdLoadAndPlayPlaylist(rfid_input)
 #       # manual_control_input = str(input("enter command: "))
 #       print ("enter command: ")
