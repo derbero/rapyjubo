@@ -240,44 +240,47 @@ while (True):
         mpdLoadAndPlayPlaylist(rfid_input)
 #       # manual_control_input = str(input("enter command: "))
 #       print ("enter command: ")
-#       manual_control_input = readchar.readkey()
-#       print('Input: ')
-#       print(manual_control_input)
-#         print(type(manual_control_input))
-#
-#         print ("trying to execute command...")
-#         print("Volume status: " + str(mpd_client.status()['volume']))
-#         print("Type: " + str(type(mpd_client.status()['volume'])))
-#
-#         if (manual_control_input == 's'):
-#             # toggle play pause
-#             mpd_client.pause()
-#             print("player in state " + mpd_client.status()['state'])
-#         elif (manual_control_input == 'w'):
-#             # set volume to +10
-#             if (int(mpd_client.status()['volume']) <= 90):
-#                 mpd_client.setvol(int(mpd_client.status()['volume']) + 10)
-#                 print ("player volume set up to " + mpd_client.status()['volume'])
-#             else:
-#                 print("player already set to maximum volume: " + mpd_client.status()['volume'])
-#         elif (manual_control_input == 'x'):
-#             # set volume to -10
-#             if (int(mpd_client.status()['volume']) >= 10):
-#                 mpd_client.setvol(int(mpd_client.status()['volume']) - 10)
-#                 print("player volume set down to " + mpd_client.status()['volume'])
-#             else:
-#                 print("player already set to minimum volume: " + mpd_client.status()['volume'])
-#         elif (manual_control_input == 'a'):
-#             # previous title
-#             mpd_client.previous()
-#             print("player has gone to song " + mpd_client.status()['song'])
-#         elif (manual_control_input == 'd'):
-#             # previous title
-#             mpd_client.next()
-#             print ("player has gone to song " + mpd_client.status()['song'])
-#         else:
-#             close_mpd_connection(mpd_client)
-#             break
+        manual_control_input = readchar.readkey()
+        print('Input: ')
+        print(manual_control_input)
+        print(type(manual_control_input))
+
+        print ("trying to execute command...")
+        print("Volume status: " + str(mpd_client.status()['volume']))
+        print("Type: " + str(type(mpd_client.status()['volume'])))
+
+        if (manual_control_input == 's'):
+            # toggle play pause
+            mpd_client.pause()
+            print("player in state " + mpd_client.status()['state'])
+        elif (manual_control_input == 'w'):
+            # set volume to +10
+            if (int(mpd_client.status()['volume']) <= 90):
+                mpd_client.setvol(int(mpd_client.status()['volume']) + 10)
+                print ("player volume set up to " + mpd_client.status()['volume'])
+            else:
+                print("player already set to maximum volume: " + mpd_client.status()['volume'])
+        elif (manual_control_input == 'x'):
+            # set volume to -10
+            if (int(mpd_client.status()['volume']) >= 10):
+                mpd_client.setvol(int(mpd_client.status()['volume']) - 10)
+                print("player volume set down to " + mpd_client.status()['volume'])
+            else:
+                print("player already set to minimum volume: " + mpd_client.status()['volume'])
+        elif (manual_control_input == 'a'):
+            # previous title
+            mpd_client.previous()
+            print("player has gone to song " + mpd_client.status()['song'])
+        elif (manual_control_input == 'd'):
+            # previous title
+            mpd_client.next()
+            print ("player has gone to song " + mpd_client.status()['song'])
+        elif (manual_control_input == 'l'):
+            # go to beginning of while to be able to load new playlist
+            continue
+        else:
+            close_mpd_connection(mpd_client)
+            break
 
 #    except:
 #    print("Exception raised.")
