@@ -246,7 +246,7 @@ while (True):
 #        manual_control_input = str(input("enter command: "))
         print ("enter command: ")
         manual_control_input = readchar.readkey()
-        print('command entered: ' + str(manual_control_input) + "; type of input: " + type(manual_control_input))
+        print("command entered: " + str(manual_control_input) + "; type of input: " + str(type(manual_control_input)))
 
         print ("trying to execute command...")
         print("Volume status: " + str(mpd_client.status()['volume']))
