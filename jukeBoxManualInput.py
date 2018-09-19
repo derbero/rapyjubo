@@ -273,11 +273,11 @@ while (True):
         elif (manual_control_input == 'a'):
             # previous title
             mpd_client.previous()
-            print("player has gone to song " + mpd_client.status()['song'])
+            print("player has gone to song " + mpd_client.status()['songid'])
         elif (manual_control_input == 'd'):
             # previous title
             mpd_client.next()
-            print ("player has gone to song " + mpd_client.status()['song'])
+            print ("player has gone to song " + mpd_client.status()['songid'])
         elif (manual_control_input == 'l'):
             # go to beginning of while to be able to load new playlist
             loadNewPlaylist = True
@@ -285,7 +285,7 @@ while (True):
         else:
             close_mpd_connection(mpd_client)
             break
-
+        print ("mpd status " + str(mpd_client.status()))
 #    except:
 #    print("Exception raised.")
     except KeyboardInterrupt: #Strg-C wird gedrückt
