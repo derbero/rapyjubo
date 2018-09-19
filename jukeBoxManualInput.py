@@ -226,6 +226,9 @@ print("...done")
 #print("trying to play...")
 #mpd_client.play(0)
 #print("...done")
+
+loadNewPlaylist = True
+
 while (True):
     try:
         sleep(1)
@@ -236,8 +239,10 @@ while (True):
 #            mpd_client.VolumeUp();
 #            print('IN_PIN_VOLUME_UP button pressed')
         # ...
-        rfid_input = str(input('Enter your playlist:'))
-        mpdLoadAndPlayPlaylist(rfid_input)
+        if loadNewPlaylist == True:
+            rfid_input = str(input('Enter your playlist:'))
+            mpdLoadAndPlayPlaylist(rfid_input)
+            loadNewPlaylist = False
 #       # manual_control_input = str(input("enter command: "))
 #       print ("enter command: ")
         manual_control_input = readchar.readkey()
@@ -277,6 +282,7 @@ while (True):
             print ("player has gone to song " + mpd_client.status()['song'])
         elif (manual_control_input == 'l'):
             # go to beginning of while to be able to load new playlist
+            loadNewPlaylist = True
             continue
         else:
             close_mpd_connection(mpd_client)
