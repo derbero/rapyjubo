@@ -243,12 +243,10 @@ while (True):
             rfid_input = str(input('Enter your playlist:'))
             mpdLoadAndPlayPlaylist(rfid_input)
             loadNewPlaylist = False
-#       # manual_control_input = str(input("enter command: "))
-#       print ("enter command: ")
+#        manual_control_input = str(input("enter command: "))
+        print ("enter command: ")
         manual_control_input = readchar.readkey()
-        print('Input: ')
-        print(manual_control_input)
-        print(type(manual_control_input))
+        print('command entered: ' + str(manual_control_input) + "; type of input: " + type(manual_control_input))
 
         print ("trying to execute command...")
         print("Volume status: " + str(mpd_client.status()['volume']))
