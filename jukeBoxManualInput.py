@@ -259,26 +259,30 @@ while (True):
             mpdPlayPauseToggle(None)
         elif (manual_control_input == 'w'):
             # set volume to +10
-            if (int(mpd_client.status()['volume']) <= 90):
-                mpd_client.setvol(int(mpd_client.status()['volume']) + 10)
-                print ("player volume set up to " + mpd_client.status()['volume'])
-            else:
-                print("player already set to maximum volume: " + mpd_client.status()['volume'])
+            #if (int(mpd_client.status()['volume']) <= 90):
+            #    mpd_client.setvol(int(mpd_client.status()['volume']) + 10)
+            #    print ("player volume set up to " + mpd_client.status()['volume'])
+            #else:
+            #    print("player already set to maximum volume: " + mpd_client.status()['volume'])
+            mpdVolumeUp(None)
         elif (manual_control_input == 'x'):
             # set volume to -10
-            if (int(mpd_client.status()['volume']) >= 10):
-                mpd_client.setvol(int(mpd_client.status()['volume']) - 10)
-                print("player volume set down to " + mpd_client.status()['volume'])
-            else:
-                print("player already set to minimum volume: " + mpd_client.status()['volume'])
+            #if (int(mpd_client.status()['volume']) >= 10):
+            #    mpd_client.setvol(int(mpd_client.status()['volume']) - 10)
+            #    print("player volume set down to " + mpd_client.status()['volume'])
+            #else:
+            #    print("player already set to minimum volume: " + mpd_client.status()['volume'])
+            mpdVolumeUp(None)
         elif (manual_control_input == 'a'):
             # previous title
-            mpd_client.previous()
-            print("player has gone to song " + mpd_client.status()['songid'])
+            #mpd_client.previous()
+            #print("player has gone to song " + mpd_client.status()['songid'])
+            mpdPrevious(None)
         elif (manual_control_input == 'd'):
             # previous title
-            mpd_client.next()
-            print ("player has gone to song " + mpd_client.status()['songid'])
+            #mpd_client.next()
+            #print ("player has gone to song " + mpd_client.status()['songid'])
+            mpdNext(None)
         elif (manual_control_input == 'l'):
             # go to beginning of while to be able to load new playlist
             loadNewPlaylist = True
