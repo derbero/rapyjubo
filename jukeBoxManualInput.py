@@ -256,7 +256,7 @@ while (True):
             # toggle play pause
             #mpd_client.pause()
             #print("player in state " + mpd_client.status()['state'])
-            mpdPlayPauseToggle()
+            mpdPlayPauseToggle(None)
         elif (manual_control_input == 'w'):
             # set volume to +10
             if (int(mpd_client.status()['volume']) <= 90):
