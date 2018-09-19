@@ -128,6 +128,7 @@ def init_mpd_connection():
 
 def mpdNumberOfSongsInPlaylist(client):
     playlistLength = int(client.status()['playlistlength'])
+    print ("playlistLength: " + str(playlistLength))
     return playlistLength
 
 def mpdPlaylistHasPreviousSong(client):
@@ -146,7 +147,7 @@ def mpdPlaylistHasNextSong(client):
 
 def mpdActualPlaylistSongNumber(client):
     actualSongNumberInPlaylist = 1 + int(client.status()['song'])
-
+    print("actualSongNumberInPlaylist: " + str(actualSongNumberInPlaylist))
 
 def mpdVolumeUp(channel):
     # set volume to +10
@@ -250,7 +251,7 @@ while (True):
 
         print ("trying to execute command...")
         print("Volume status: " + str(mpd_client.status()['volume']))
-        print("Type: " + str(type(mpd_client.status()['volume'])))
+        #print("Type: " + str(type(mpd_client.status()['volume'])))
 
         if (manual_control_input == 's'):
             # toggle play pause
