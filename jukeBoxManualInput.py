@@ -144,6 +144,8 @@ def mpdPlaylistHasNextSong(client):
     if (mpdNumberOfSongsInPlaylist(client) + 1) > mpdActualPlaylistSongNumber(client):
         hasNextSong = True
         print("mpdPlaylistHasNextSong->hasNextSong = True")
+        print("mpdNumberOfSongsInPlaylist(client) + 1): " + str(mpdNumberOfSongsInPlaylist(client) + 1)))
+        print("mpdActualPlaylistSongNumber(client): " + str(mpdActualPlaylistSongNumber(client) + 1)))
     else:
         hasNextSong = False
         print("mpdPlaylistHasNextSong->hasNextSong = False")
