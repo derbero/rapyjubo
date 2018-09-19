@@ -223,7 +223,7 @@ print("...done")
 #print("...done")
 while (True):
     try:
-        time.sleep(0.1)
+        sleep(1)
 #        if GPIO.event_detected(IN_PIN_TOGGLE_PLAY_PAUSE):
 #            mpd_client.PlayPauseToggle();
 #            print('IN_PIN_TOGGLE_PLAY_PAUSE button pressed')
