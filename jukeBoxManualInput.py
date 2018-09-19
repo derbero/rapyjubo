@@ -132,6 +132,7 @@ def mpdNumberOfSongsInPlaylist(client):
     return playlistLength
 
 def mpdPlaylistHasPreviousSong(client):
+    hasPrevSong = False
     if (mpdActualPlaylistSongNumber(client) > 1):
         hasPrevSong = True
     else:
@@ -139,6 +140,7 @@ def mpdPlaylistHasPreviousSong(client):
     return hasPrevSong
 
 def mpdPlaylistHasNextSong(client):
+    hasNextSong = False
     if (mpdNumberOfSongsInPlaylist(client) > mpdActualPlaylistSongNumber(client)):
         hasNextSong = True
     else:
@@ -172,7 +174,7 @@ def mpdPlayPauseToggle(channel):
 
 def mpdNext(channel):
     # next title
-    if mpdPlaylistHasNextSong(mpd_client):
+    if mpdPlaylistHasNextSong(mpd_client) == True:
         mpd_client.next()
         print("player has gone to next song " + str(mpd_client.status()['song']))
     else:
@@ -180,7 +182,7 @@ def mpdNext(channel):
 
 def mpdPrevious(channel):
     # previous title
-    if mpdPlaylistHasPreviousSong(mpd_client):
+    if mpdPlaylistHasPreviousSong(mpd_client) == True:
         mpd_client.previous()
         print ("player has gone to previous song " + str(mpd_client.status()['song']))
     else:
