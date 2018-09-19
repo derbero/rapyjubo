@@ -141,7 +141,7 @@ def mpdPlaylistHasPreviousSong(client):
 
 def mpdPlaylistHasNextSong(client):
     hasNextSong = False
-    if (mpdNumberOfSongsInPlaylist(client) > mpdActualPlaylistSongNumber(client)):
+    if ( (mpdNumberOfSongsInPlaylist(client) + 1) > mpdActualPlaylistSongNumber(client)):
         hasNextSong = True
         print("mpdPlaylistHasNextSong->hasNextSong = True")
     else:
@@ -277,7 +277,7 @@ while (True):
             #    print("player volume set down to " + mpd_client.status()['volume'])
             #else:
             #    print("player already set to minimum volume: " + mpd_client.status()['volume'])
-            mpdVolumeUp(None)
+            mpdVolumeDown(None)
         elif (manual_control_input == 'a'):
             # previous title
             #mpd_client.previous()
