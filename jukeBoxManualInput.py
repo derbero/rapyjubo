@@ -8,6 +8,8 @@ from socket import error as SocketError
 import mpd
 #import mpc  # ?
 from time import sleep, time
+from flask import Flask
+from flask import jsonify
 import RPi.GPIO as GPIO
 import readchar
 
@@ -27,6 +29,8 @@ IN_PIN_VOLUME_DOWN = 13
 IN_PIN_TRACK_NEXT = 15
 IN_PIN_TRACK_PREVIOUS = 16
 IN_PIN_TOGGLE_PLAY_PAUSE = 11
+
+app = Flask(__name__)
 
 print ("...done!")
 
@@ -290,6 +294,29 @@ print("...done")
 #print("...done")
 
 loadNewPlaylist = True
+
+@app.route('/api/mpd/volumeup')
+def mpd_volumeup():
+    mpdVolumeUp(None)
+
+
+# @app.route('/api/led/on')
+# def led_on():
+#     GPIO.output(LED,GPIO.HIGH)
+#     return jsonify(led=GPIO.input(LED))
+#
+# @app.route('/api/led/off')
+# def led_off():
+#     GPIO.output(LED,GPIO.LOW)
+#     return jsonify(led=GPIO.input(LED))
+#
+# @app.route('/api/led/toggle')
+# def led_togggle():
+#     GPIO.output(LED,not GPIO.input(LED))
+#     return jsonify(led=GPIO.input(LED))
+
+if __name__ == '__main__':
+    app.run(debug=True,host="0.0.0.0")
 
 while (True):
     try:
