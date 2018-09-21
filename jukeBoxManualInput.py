@@ -207,7 +207,7 @@ def mpdNumberOfSongsInPlaylist(client):
     return playlistLength
 
 def mpdPlaylistHasPreviousSong(client):
-    print
+    print()
     print("---------- BEGIN ---- mpdPlaylistHasNextSong(client) ------------")
     actualSongNumber = mpdActualPlaylistSongNumber(client)
     print("actualSongNumber: " + str(actualSongNumber))
@@ -220,7 +220,7 @@ def mpdPlaylistHasPreviousSong(client):
     return hasPrevSong
 
 def mpdPlaylistHasNextSong(client):
-    print
+    print()
     print("---------- BEGIN ---- mpdPlaylistHasNextSong(client) ------------")
     noOfSongsInList = mpdNumberOfSongsInPlaylist(client)
     actualSongNumber = mpdActualPlaylistSongNumber(client)
@@ -255,6 +255,7 @@ def mpdActualPlaylistSongNumber(client):
 # begin
 ##########################################
 def mpdVolumeUp(channel):
+    print()
     print("---------- BEGIN ---- mpdVolumeUp ------------")
     # set volume to +10
     if (int(mpd_client.status()['volume']) <= 90):
@@ -265,6 +266,7 @@ def mpdVolumeUp(channel):
 
 def mpdVolumeDown(channel):
     # set volume to -10
+    print()
     if (int(mpd_client.status()['volume']) >= 10):
         mpd_client.setvol(int(mpd_client.status()['volume']) - 10)
         print("player volume set down to " + str(mpd_client.status()['volume']))
@@ -273,11 +275,13 @@ def mpdVolumeDown(channel):
 
 def mpdPlayPauseToggle(channel):
     # toggle play pause
+    print()
     mpd_client.pause()
     print("player in state " + str(mpd_client.status()['state']))
 
 def mpdNext(channel):
     # next title
+    print()
     if mpdPlaylistHasNextSong(mpd_client) is True:
         mpd_client.next()
         print("player has gone to next song " + str(mpd_client.status()['song']))
@@ -286,6 +290,7 @@ def mpdNext(channel):
 
 def mpdPrevious(channel):
     # previous title
+    print()
     if mpdPlaylistHasPreviousSong(mpd_client) is True:
         mpd_client.previous()
         print ("player has gone to previous song " + str(mpd_client.status()['song']))
@@ -299,14 +304,17 @@ def mpdPrevious(channel):
 def mpdLoadAndPlayPlaylist(playlistId):
     #global mpd_client
     try:
+        print()
         print("trying to clear playlist ...")
         mpd_client.clear()
         print("... playlist cleared")
         try:
+            print()
             print("trying to load playlist..." + str(playlistId))
             mpd_client.load(str(playlistId))
             print("... playlist " + str(playlistId) + " loaded successfully")
             try:
+                print()
                 print("trying to start playing ...")
                 mpd_client.play(0)
                 print("... playing")
@@ -315,7 +323,7 @@ def mpdLoadAndPlayPlaylist(playlistId):
                 exit(1)
         except:
             print("... error while loading playlist")
-            exit(1)
+            #exit(1)
     except:
         print("... error while clearing playlist")
         exit(1)
@@ -416,9 +424,11 @@ while (True):
 #    print("Exception raised.")
     except KeyboardInterrupt: #Strg-C wird gedrückt
         print("Exception raised.")
+        print()
         print("GPIO.cleanup()...")
         GPIO.cleanup()
         print("GPIO.cleanup()... done")
+        print()
         print("close_mpd_connection()...")
         mpdCloseConnection(mpd_client)
         print("close_mpd_connection()... done")
