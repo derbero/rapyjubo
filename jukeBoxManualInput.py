@@ -127,6 +127,7 @@ def mpdInitConnection():
     """
     Initializes a MPDClient connection.
     """
+    global mpd_client 
     print()
     print("---------- BEGIN ---- mpdInitConnection(client) ------------")
     print("trying to connect to mpd...")
@@ -249,6 +250,7 @@ def mpdPrevious(channel):
 ##########################################
 
 def mpdLoadAndPlayPlaylist(playlistId):
+    global mpd_client 
     try:
         print("trying to clear playlist ...")
         #mpd_client.clear()
