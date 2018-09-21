@@ -278,7 +278,7 @@ GPIO.add_event_detect(IN_PIN_TOGGLE_PLAY_PAUSE, GPIO.RISING, callback=mpdPlayPau
 
 mpd_client = mpdInitConnection()
 print("trying to clear...")
-mpd_client.clear()
+#mpd_client.clear()
 print("...done")
 
 #print("trying to load playlist...")
