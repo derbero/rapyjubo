@@ -17,7 +17,7 @@ global TEST_MPD_HOST, TEST_MPD_PORT, TEST_MPD_PASSWORD
 
 TEST_MPD_HOST = "localhost"
 TEST_MPD_PORT = "6600"
-TEST_MPD_PASSWORD = ""
+TEST_MPD_PASSWORD = None 
 POWEROFF_TIME = 10
 
 OUT_PIN_POWER = 3
@@ -153,7 +153,7 @@ def mpdInitConnection():
                 connected = False
         if connected == False:
             print("Couldn't connect to mpd. Retrying")
-            sleep(5)
+            sleep(0.5)
 
     print("mpd connected")
 
