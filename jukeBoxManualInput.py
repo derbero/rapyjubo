@@ -14,6 +14,7 @@ import readchar
 print ("Setting constants...")
 
 global TEST_MPD_HOST, TEST_MPD_PORT, TEST_MPD_PASSWORD
+global mpd_client
 
 TEST_MPD_HOST = "localhost"
 TEST_MPD_PORT = "6600"
