@@ -127,7 +127,7 @@ def mpdInitConnection():
     Initializes a MPDClient connection.
     """
     print()
-    print("---------- BEGIN ---- mpdCloseConnection(client) ------------")
+    print("---------- BEGIN ---- mpdInitConnection(client) ------------")
     print("trying to connect to mpd...")
     mpd_client = mpd.MPDClient()
     #print(mpd_client.status()['state'])
@@ -157,8 +157,8 @@ def mpdInitConnection():
 
     print("mpd connected")
 
-    print(mpd_client.status()['state'])
-    print("---------- END   ---- mpdCloseConnection(client) ------------")
+    print("mpd_client.status()['state']" + mpd_client.status()['state'])
+    print("---------- END   ---- mpdInitConnection(client) ------------")
 
 def mpdNumberOfSongsInPlaylist(client):
     playlistLength = int(client.status()['playlistlength'])
@@ -250,7 +250,7 @@ def mpdPrevious(channel):
 def mpdLoadAndPlayPlaylist(playlistId):
     try:
         print("trying to clear playlist ...")
-        mpd_client.clear()
+        #mpd_client.clear()
         print("... playlist cleared")
         try:
             print("trying to load playlist..." + str(playlistId))
