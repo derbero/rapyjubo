@@ -109,6 +109,25 @@ def gpioCleanup():
 # some internal mpd functions
 # end
 ##########################################
+#########  MPD PARAMETERS  ##############
+# Only if you know what you're doing! #
+HOST = 'localhost' #
+#HOST = '192.168.0.125' #
+PORT = '6600' #
+PASSWORD = False #
+CON_ID = {'host':HOST, 'port':PORT} #
+#########################################
+
+def mpdConnect(client, con_id): #
+   """ #
+   Simple wrapper to connect MPD. #
+   """ #
+   try: #
+       client.connect(**con_id) #
+   except SocketError: #
+       return False #
+   return True #
+
 def mpdCloseConnection(client):
     """
     Closes the MPDClient connection.
@@ -279,7 +298,9 @@ GPIO.add_event_detect(IN_PIN_TOGGLE_PLAY_PAUSE, GPIO.RISING, callback=mpdPlayPau
 
 
 
-mpd_client = mpdInitConnection()
+#mpd_client = mpdInitConnection()
+mpdConnect(mpd_client, CON_ID)
+
 print("trying to clear...")
 #mpd_client.clear()
 print("...done")
