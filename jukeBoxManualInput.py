@@ -318,15 +318,17 @@ def mpdLoadAndPlayPlaylist(playlistId):
                 print("trying to start playing ...")
                 mpd_client.play(0)
                 print("... playing")
+                return True
             except:
                 print("... error while trying to play")
-                exit(1)
+                return False
         except:
             print("... error while loading playlist")
-            #exit(1)
+            return False
     except:
         print("... error while clearing playlist")
-        exit(1)
+        return False
+
 
 GPIO.add_event_detect(IN_PIN_VOLUME_UP, GPIO.RISING, callback=mpdVolumeUp, bouncetime=200)  # add rising edge detection on a channel
 GPIO.add_event_detect(IN_PIN_VOLUME_DOWN, GPIO.RISING, callback=mpdVolumeDown, bouncetime=200)
@@ -366,9 +368,11 @@ while (True):
 #            print('IN_PIN_VOLUME_UP button pressed')
         # ...
         if loadNewPlaylist == True:
-            rfid_input = str(input('Enter your playlist:'))
-            mpdLoadAndPlayPlaylist(rfid_input)
-            loadNewPlaylist = False
+            playlistLoadedSuccessfully = False
+            while(not playlistLoadedSuccessfully):
+                rfid_input = str(input('Enter your playlist:'))
+                playlistLoadedSuccessfully = mpdLoadAndPlayPlaylist(rfid_input)
+                loadNewPlaylist = False
 #        manual_control_input = str(input("enter command: "))
         print ("enter command: ")
         manual_control_input = readchar.readkey()
