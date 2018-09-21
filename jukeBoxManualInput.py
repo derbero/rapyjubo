@@ -14,10 +14,11 @@ import readchar
 print ("Setting constants...")
 
 global TEST_MPD_HOST, TEST_MPD_PORT, TEST_MPD_PASSWORD
+global mpd_client
 
 TEST_MPD_HOST = "localhost"
 TEST_MPD_PORT = "6600"
-TEST_MPD_PASSWORD = ""
+TEST_MPD_PASSWORD = None 
 POWEROFF_TIME = 10
 
 OUT_PIN_POWER = 3
@@ -80,9 +81,9 @@ GPIO.setup(OUT_PIN_POWER, GPIO.OUT, initial=GPIO.LOW)
 # GPIO.cleanup()
 
 
-#print ("trying to get mpd_client = mpd.MPDClient()...")
-#mpd_client = mpd.MPDClient()
-#print("...done")
+print ("trying to get mpd_client = mpd.MPDClient()...")
+mpd_client = mpd.MPDClient()
+print("...done")
 
 ##########################################
 # some internal gpio functions
@@ -108,6 +109,25 @@ def gpioCleanup():
 # some internal mpd functions
 # end
 ##########################################
+#########  MPD PARAMETERS  ##############
+# Only if you know what you're doing! #
+HOST = 'localhost' #
+#HOST = '192.168.0.125' #
+PORT = '6600' #
+PASSWORD = False #
+CON_ID = {'host':HOST, 'port':PORT} #
+#########################################
+
+def mpdConnect(client, con_id): #
+   """ #
+   Simple wrapper to connect MPD. #
+   """ #
+   try: #
+       client.connect(**con_id) #
+   except SocketError: #
+       return False #
+   return True #
+
 def mpdCloseConnection(client):
     """
     Closes the MPDClient connection.
@@ -126,8 +146,9 @@ def mpdInitConnection():
     """
     Initializes a MPDClient connection.
     """
+    global mpd_client 
     print()
-    print("---------- BEGIN ---- mpdCloseConnection(client) ------------")
+    print("---------- BEGIN ---- mpdInitConnection(client) ------------")
     print("trying to connect to mpd...")
     mpd_client = mpd.MPDClient()
     #print(mpd_client.status()['state'])
@@ -153,12 +174,16 @@ def mpdInitConnection():
                 connected = False
         if connected == False:
             print("Couldn't connect to mpd. Retrying")
+<<<<<<< HEAD
             sleep(1)
+=======
+            sleep(0.5)
+>>>>>>> master
 
     print("mpd connected")
 
-    print(mpd_client.status()['state'])
-    print("---------- END   ---- mpdCloseConnection(client) ------------")
+    print("mpd_client.status()['state']" + mpd_client.status()['state'])
+    print("---------- END   ---- mpdInitConnection(client) ------------")
 
 def mpdNumberOfSongsInPlaylist(client):
     #print()
@@ -259,9 +284,10 @@ def mpdPrevious(channel):
 ##########################################
 
 def mpdLoadAndPlayPlaylist(playlistId):
+    global mpd_client 
     try:
         print("trying to clear playlist ...")
-        mpd_client.clear()
+        #mpd_client.clear()
         print("... playlist cleared")
         try:
             print("trying to load playlist..." + str(playlistId))
@@ -287,9 +313,11 @@ GPIO.add_event_detect(IN_PIN_TOGGLE_PLAY_PAUSE, GPIO.RISING, callback=mpdPlayPau
 
 
 
-mpd_client = mpdInitConnection()
+#mpd_client = mpdInitConnection()
+mpdConnect(mpd_client, CON_ID)
+
 print("trying to clear...")
-mpd_client.clear()
+#mpd_client.clear()
 print("...done")
 
 #print("trying to load playlist...")
