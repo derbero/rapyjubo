@@ -371,6 +371,8 @@ while (True):
             playlistLoadedSuccessfully = False
             while(not playlistLoadedSuccessfully):
                 rfid_input = str(input('Enter your playlist:'))
+                if(rfid_input == 'x'):
+                    break
                 playlistLoadedSuccessfully = mpdLoadAndPlayPlaylist(rfid_input)
                 loadNewPlaylist = False
 #        manual_control_input = str(input("enter command: "))
