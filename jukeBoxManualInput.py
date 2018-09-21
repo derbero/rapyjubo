@@ -51,7 +51,7 @@ GPIO.setup(IN_PIN_TOGGLE_PLAY_PAUSE, GPIO.IN)
 # You can also specify an initial value for your output channel:
 # GPIO.setup(channel, GPIO.OUT, initial=GPIO.HIGH)
 # Beim Starten des Programmes wird die LED vom Power Button auf AN geschaltet
-GPIO.setup(OUT_PIN_POWER, GPIO.OUT, initial=GPIO.HIGH)
+GPIO.setup(OUT_PIN_POWER, GPIO.OUT, initial=GPIO.LOW)
 
 
 # You can set up more than one channel per call (release 0.5.8 onwards). For example:
@@ -153,7 +153,7 @@ def mpdInitConnection():
                 connected = False
         if connected == False:
             print("Couldn't connect to mpd. Retrying")
-            sleep(5)
+            sleep(1)
 
     print("mpd connected")
 
@@ -161,21 +161,29 @@ def mpdInitConnection():
     print("---------- END   ---- mpdCloseConnection(client) ------------")
 
 def mpdNumberOfSongsInPlaylist(client):
+    #print()
+    #print("---------- BEGIN ---- mpdNumberOfSongsInPlaylist(client) ------------")
     playlistLength = int(client.status()['playlistlength'])
-    print ("playlistLength: " + str(playlistLength))
+    #print ("playlistLength: " + str(playlistLength))
+    #print("---------- END   ---- mpdNumberOfSongsInPlaylist(client) ------------")
     return playlistLength
 
 def mpdPlaylistHasPreviousSong(client):
-    hasPrevSong = False
+    print
+    print("---------- BEGIN ---- mpdPlaylistHasNextSong(client) ------------")
+    actualSongNumber = mpdActualPlaylistSongNumber(client)
+    print("actualSongNumber: " + str(actualSongNumber))
+    print("(mpdActualPlaylistSongNumber(client) > 1): " + str(mpdActualPlaylistSongNumber(client) > 1))
     if (mpdActualPlaylistSongNumber(client) > 1):
         hasPrevSong = True
     else:
         hasPrevSong = False
+    print("hasPrevSong: " + str(hasPrevSong))
     return hasPrevSong
 
 def mpdPlaylistHasNextSong(client):
+    print
     print("---------- BEGIN ---- mpdPlaylistHasNextSong(client) ------------")
-    hasNextSong = False
     noOfSongsInList = mpdNumberOfSongsInPlaylist(client)
     actualSongNumber = mpdActualPlaylistSongNumber(client)
     print("noOfSongsInList: " + str(noOfSongsInList))
@@ -191,8 +199,11 @@ def mpdPlaylistHasNextSong(client):
     return hasNextSong
 
 def mpdActualPlaylistSongNumber(client):
+    #print
+    #print("---------- BEGIN ---- mpdActualPlaylistSongNumber(client) ------------")
     actualSongNumberInPlaylist = 1 + int(client.status()['song'])
-    #print("actualSongNumberInPlaylist: " + str(actualSongNumberInPlaylist))
+    #print("actualSongNumberInPlaylist : " + str(actualSongNumberInPlaylist ))
+    #print("---------- END   ---- mpdActualPlaylistSongNumber(client) ------------")
     return actualSongNumberInPlaylist
 ##########################################
 # some internal mpd functions
