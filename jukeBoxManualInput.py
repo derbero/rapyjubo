@@ -13,12 +13,22 @@ import readchar
 
 print ("Setting constants...")
 
-global TEST_MPD_HOST, TEST_MPD_PORT, TEST_MPD_PASSWORD
-global mpd_client
+#global TEST_MPD_HOST, TEST_MPD_PORT, TEST_MPD_PASSWORD
 
-TEST_MPD_HOST = "localhost"
-TEST_MPD_PORT = "6600"
-TEST_MPD_PASSWORD = None 
+#########  MPD PARAMETERS  ##############
+# Only if you know what you're doing! #
+HOST = 'localhost' #
+#HOST = '192.168.0.125' #
+PORT = '6600' #
+PASSWORD = False #
+CON_ID = {'host':HOST, 'port':PORT} #
+
+#TEST_MPD_HOST = "localhost"
+#TEST_MPD_PORT = "6600"
+#TEST_MPD_PASSWORD = None
+#########################################
+
+
 POWEROFF_TIME = 10
 
 OUT_PIN_POWER = 3
@@ -109,37 +119,44 @@ def gpioCleanup():
 # some internal mpd functions
 # end
 ##########################################
-#########  MPD PARAMETERS  ##############
-# Only if you know what you're doing! #
-HOST = 'localhost' #
-#HOST = '192.168.0.125' #
-PORT = '6600' #
-PASSWORD = False #
-CON_ID = {'host':HOST, 'port':PORT} #
-#########################################
 
-def mpdConnect(client, con_id): #
-   """ #
-   Simple wrapper to connect MPD. #
-   """ #
-   try: #
-       client.connect(**con_id) #
-   except SocketError: #
-       return False #
-   return True #
+
+def mpdConnect(client, con_id):
+   """
+   Simple wrapper to connect MPD.
+   """
+   print()
+   print("---------- BEGIN ---- mpdConnect(client, con_id) ------------")
+   print("trying to connect to mpd...")
+   try:
+       client.connect(**con_id)
+   except SocketError as err:
+       print("... mpd connection FAILED: " + err)
+       return False
+   print("... mpd connection SUCCESSFULL")
+   print("mpd_client.status()['state']: " + mpd_client.status()['state'])
+   print("---------- END   ---- mpdConnect(client, con_id) ------------")
+   return True
+
 
 def mpdCloseConnection(client):
     """
     Closes the MPDClient connection.
     """
-    #client.stop()
-    #client.close()
-    #client.disconnect()
     print()
     print("---------- BEGIN ---- mpdCloseConnection(client) ------------")
-    print("killing mpd... ")
-    client.kill()
-    print("... mpd has been killed successfully!")
+    print("trying to stop mpd...")
+    client.stop()
+    print("... stopped")
+    print("trying to close mpd...")
+    client.close()
+    print("... closed")
+    print("trying to disconnect...")
+    client.disconnect()
+    print("... disconnected")
+    #print("killing mpd... ")
+    #client.kill()
+    #print("... mpd has been killed successfully!")
     print("---------- END   ---- mpdCloseConnection(client) ------------")
 
 def mpdInitConnection():
@@ -174,11 +191,7 @@ def mpdInitConnection():
                 connected = False
         if connected == False:
             print("Couldn't connect to mpd. Retrying")
-<<<<<<< HEAD
-            sleep(1)
-=======
             sleep(0.5)
->>>>>>> master
 
     print("mpd connected")
 
@@ -284,10 +297,10 @@ def mpdPrevious(channel):
 ##########################################
 
 def mpdLoadAndPlayPlaylist(playlistId):
-    global mpd_client 
+    #global mpd_client
     try:
         print("trying to clear playlist ...")
-        #mpd_client.clear()
+        mpd_client.clear()
         print("... playlist cleared")
         try:
             print("trying to load playlist..." + str(playlistId))
@@ -299,11 +312,13 @@ def mpdLoadAndPlayPlaylist(playlistId):
                 print("... playing")
             except:
                 print("... error while trying to play")
+                exit(1)
         except:
             print("... error while loading playlist")
+            exit(1)
     except:
         print("... error while clearing playlist")
-
+        exit(1)
 
 GPIO.add_event_detect(IN_PIN_VOLUME_UP, GPIO.RISING, callback=mpdVolumeUp, bouncetime=200)  # add rising edge detection on a channel
 GPIO.add_event_detect(IN_PIN_VOLUME_DOWN, GPIO.RISING, callback=mpdVolumeDown, bouncetime=200)
@@ -314,7 +329,8 @@ GPIO.add_event_detect(IN_PIN_TOGGLE_PLAY_PAUSE, GPIO.RISING, callback=mpdPlayPau
 
 
 #mpd_client = mpdInitConnection()
-mpdConnect(mpd_client, CON_ID)
+if not mpdConnect(mpd_client, CON_ID):
+    exit(1)
 
 print("trying to clear...")
 #mpd_client.clear()
