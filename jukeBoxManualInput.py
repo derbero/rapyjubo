@@ -80,9 +80,9 @@ GPIO.setup(OUT_PIN_POWER, GPIO.OUT, initial=GPIO.HIGH)
 # GPIO.cleanup()
 
 
-#print ("trying to get mpd_client = mpd.MPDClient()...")
-#mpd_client = mpd.MPDClient()
-#print("...done")
+print ("trying to get mpd_client = mpd.MPDClient()...")
+mpd_client = mpd.MPDClient()
+print("...done")
 
 ##########################################
 # some internal gpio functions
