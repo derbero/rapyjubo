@@ -106,7 +106,7 @@ print("...done")
 # By default, MPD will close connection after 60 seconds of inactivity
 def mpd_ping():
     while True:
-        time.sleep(50) # We will ping it every 50 seconds
+        sleep(50) # We will ping it every 50 seconds
         #print "Pinging MPD..."
         #client_cntrl.ping() # Ping it!
         print ("mpd_client.ping(): ") + str(mpd_client.ping())
