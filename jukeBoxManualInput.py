@@ -5,7 +5,9 @@ import os
 import types
 import sys
 from socket import error as SocketError
+from mpd import (MPDClient, CommandError)
 import mpd
+import threading
 #import mpc  # ?
 from time import sleep, time
 import RPi.GPIO as GPIO
@@ -94,6 +96,28 @@ GPIO.setup(OUT_PIN_POWER, GPIO.OUT, initial=GPIO.LOW)
 print ("trying to get mpd_client = mpd.MPDClient()...")
 mpd_client = mpd.MPDClient()
 print("...done")
+
+
+##########################################
+# thread ping function
+# begin
+##########################################
+# We have to ping MPD client for buttons to avoid losing connection
+# By default, MPD will close connection after 60 seconds of inactivity
+def mpd_ping():
+    while True:
+        time.sleep(50) # We will ping it every 50 seconds
+        #print "Pinging MPD..."
+        #client_cntrl.ping() # Ping it!
+        print ("mpd_client.ping(): ") + str(mpd_client.ping())
+##########################################
+# thread ping function
+# end
+##########################################
+
+
+
+
 
 ##########################################
 # some internal gpio functions
@@ -378,7 +402,7 @@ while (True):
         if loadNewPlaylist == True:
             playlistLoadedSuccessfully = False
             while(not playlistLoadedSuccessfully):
-                rfid_input = str(input('Enter your playlist:'))
+                rfid_input = str(raw_input('Enter your playlist:')) # python2: raw_input; python3: input
                 if(rfid_input == 'x'):
                     break
                 playlistLoadedSuccessfully = mpdLoadAndPlayPlaylist(rfid_input)
@@ -446,3 +470,9 @@ while (True):
         print("close_mpd_connection()...")
         mpdCloseConnection(mpd_client)
         print("close_mpd_connection()... done")
+
+
+# MPD Ping Thread
+mpdping_t = threading.Thread(target=mpd_ping, args = ()) # Create thread for pinging MPD
+mpdping_t.daemon = True # Yep, it's a daemon, when main thread finish, this one will finish too
+mpdping_t.start() # Start it!
