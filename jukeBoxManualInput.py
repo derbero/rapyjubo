@@ -389,6 +389,12 @@ print("...done")
 loadNewPlaylist = True
 
 
+# MPD Ping Thread
+mpdping_t = threading.Thread(target=mpd_ping, args = ()) # Create thread for pinging MPD
+mpdping_t.daemon = True # Yep, it's a daemon, when main thread finish, this one will finish too
+mpdping_t.start() # Start it!
+
+
 while (True):
     try:
         sleep(0.1)
@@ -472,7 +478,3 @@ while (True):
         print("close_mpd_connection()... done")
 
 
-# MPD Ping Thread
-mpdping_t = threading.Thread(target=mpd_ping, args = ()) # Create thread for pinging MPD
-mpdping_t.daemon = True # Yep, it's a daemon, when main thread finish, this one will finish too
-mpdping_t.start() # Start it!
