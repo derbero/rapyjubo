@@ -368,6 +368,7 @@ GPIO.add_event_detect(IN_PIN_TRACK_NEXT, GPIO.RISING, callback=mpdNext, bounceti
 GPIO.add_event_detect(IN_PIN_TRACK_PREVIOUS, GPIO.RISING, callback=mpdPrevious, bouncetime=200)
 GPIO.add_event_detect(IN_PIN_TOGGLE_PLAY_PAUSE, GPIO.RISING, callback=mpdPlayPauseToggle, bouncetime=200)
 
+#GPIO.add_event_detect(OUT_PIN_POWER, GPIO.LOW, callback=shutMeDown, bouncetime=200)
 
 
 #mpd_client = mpdInitConnection()
