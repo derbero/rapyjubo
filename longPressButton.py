@@ -6,7 +6,7 @@ import pigpio
 # tolle abkürzungen für die gpios:
 # http://abyz.me.uk/rpi/pigpio/python.html#callback
 
-gpio = 7  # where the switch is connected
+gpio = 3  # where the switch is connected
 
 pi = pigpio.pi()
 pressTick = pi.get_current_tick()  # initializing var
