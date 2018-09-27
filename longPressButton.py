@@ -6,7 +6,7 @@ import pigpio
 # tolle abkürzungen für die gpios:
 # http://abyz.me.uk/rpi/pigpio/python.html#callback
 
-gpio = 3  # where the switch is connected
+gpio = 11  # where the switch is connected
 
 pi = pigpio.pi()
 pressTick = pi.get_current_tick()  # initializing var
@@ -25,10 +25,10 @@ def intCallback(g, level, tick):
         diff = pigpio.tickDiff(pressTick, tick)
         if diff < 3000:
             # Switch pressed under 3 seconds
-            print("Short")
+            print("Short: " + str(diff))
         elif diff >= 3000:
             # Switch pressed over 3 second
-            print("Long")
+            print("Long: " + str(diff))
 
 
 try:
