@@ -6,7 +6,7 @@ import pigpio
 # tolle abkürzungen für die gpios:
 # http://abyz.me.uk/rpi/pigpio/python.html#callback
 
-gpio = 11  # where the switch is connected
+gpio = 17  # where the switch is connected
 
 def intCallback(g, level, tick):
     global pressTick
