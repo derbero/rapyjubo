@@ -36,6 +36,7 @@ cb = pi.callback(gpio, pigpio.RISING_EDGE, intCallback)
 try:
     while True:
         time.sleep(1)
+        pressTick = pi.get_current_tick()
 
 except (KeyboardInterrupt, SystemExit) as e:
     print("Clean exit")
