@@ -18,10 +18,10 @@ def intCallback(g, level, tick):
         diff = pigpio.tickDiff(pressTick, tick)
         if diff < 3000:
             # Switch pressed under 3 seconds
-            print("Short: " + str(diff))
+            print("Short: " + str(diff) + "; pressTick: " + str(pressTick) + "; tick: " + str(tick))
         elif diff >= 3000:
             # Switch pressed over 3 second
-            print("Long: " + str(diff))
+            print("Long: " + str(diff) + "; pressTick: " + str(pressTick) + "; tick: " + str(tick))
 
 pi = pigpio.pi()
 pressTick = pi.get_current_tick()  # initializing var
