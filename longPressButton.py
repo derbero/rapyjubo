@@ -8,13 +8,6 @@ import pigpio
 
 gpio = 11  # where the switch is connected
 
-pi = pigpio.pi()
-pressTick = pi.get_current_tick()  # initializing var
-pi.set_mode(gpio, pigpio.INPUT)
-pi.set_pull_up_down(gpio, pigpio.PUD_UP)  # this depends on how the switch is connected
-cb = pi.callback(gpio, pigpio.RISING_EDGE, intCallback)
-
-
 def intCallback(g, level, tick):
     global pressTick
     if level == 0:
@@ -29,6 +22,15 @@ def intCallback(g, level, tick):
         elif diff >= 3000:
             # Switch pressed over 3 second
             print("Long: " + str(diff))
+
+pi = pigpio.pi()
+pressTick = pi.get_current_tick()  # initializing var
+pi.set_mode(gpio, pigpio.INPUT)
+pi.set_pull_up_down(gpio, pigpio.PUD_UP)  # this depends on how the switch is connected
+cb = pi.callback(gpio, pigpio.RISING_EDGE, intCallback)
+
+
+
 
 
 try:
