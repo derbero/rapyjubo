@@ -366,7 +366,7 @@ GPIO.add_event_detect(IN_PIN_VOLUME_UP, GPIO.RISING, callback=mpdVolumeUp, bounc
 GPIO.add_event_detect(IN_PIN_VOLUME_DOWN, GPIO.RISING, callback=mpdVolumeDown, bouncetime=200)
 GPIO.add_event_detect(IN_PIN_TRACK_NEXT, GPIO.RISING, callback=mpdNext, bouncetime=200)
 GPIO.add_event_detect(IN_PIN_TRACK_PREVIOUS, GPIO.RISING, callback=mpdPrevious, bouncetime=200)
-GPIO.add_event_detect(IN_PIN_TOGGLE_PLAY_PAUSE, GPIO.RISING, callback=mpdPlayPauseToggle, bouncetime=200)
+GPIO.add_event_detect(IN_PIN_TOGGLE_PLAY_PAUSE, GPIO.FALLING, callback=mpdPlayPauseToggle, bouncetime=200)
 
 #GPIO.add_event_detect(OUT_PIN_POWER, GPIO.LOW, callback=shutMeDown, bouncetime=200)
 
