@@ -373,9 +373,9 @@ GPIO.add_event_detect(IN_PIN_TOGGLE_PLAY_PAUSE, GPIO.FALLING, callback=mpdPlayPa
 if not mpdConnect(mpd_client, CON_ID):
     exit(1)
 
-print("trying to clear...")
+#print("trying to clear...")
 #mpd_client.clear()
-print("...done")
+#print("...done")
 
 #print("trying to load playlist...")
 #mpd_client.load("Benjamin Bluemchen_02 Rettet den Zoo")
@@ -396,7 +396,7 @@ mpdping_t.start() # Start it!
 
 while (True):
     try:
-        sleep(1)
+        sleep(5)
 #        if GPIO.event_detected(IN_PIN_TOGGLE_PLAY_PAUSE):
 #            mpd_client.PlayPauseToggle();
 #            print('IN_PIN_TOGGLE_PLAY_PAUSE button pressed')
