@@ -47,8 +47,6 @@ print ("...done!")
 # to use Raspberry Pi board pin numbers
 GPIO.setmode(GPIO.BOARD)
 
-# to use Raspberry Pi board pin numbers
-GPIO.setmode(GPIO.BOARD)
 
 # To configure a channel as an input:
 # GPIO.setup(channel, GPIO.IN)
