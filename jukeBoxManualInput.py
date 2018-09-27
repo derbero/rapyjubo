@@ -403,7 +403,7 @@ mpdping_t.start() # Start it!
 
 while (True):
     try:
-        sleep(5)
+        sleep(0.2)
 #        if GPIO.event_detected(IN_PIN_TOGGLE_PLAY_PAUSE):
 #            mpd_client.PlayPauseToggle();
 #            print('IN_PIN_TOGGLE_PLAY_PAUSE button pressed')
