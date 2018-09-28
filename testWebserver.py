@@ -17,9 +17,13 @@ print ("Setting constants...")
 
 global TEST_MPD_HOST, TEST_MPD_PORT, TEST_MPD_PASSWORD
 
-TEST_MPD_HOST = "localhost"
-TEST_MPD_PORT = "6600"
-TEST_MPD_PASSWORD = ""
+#########  MPD PARAMETERS  ##############
+# Only if you know what you're doing! #
+HOST = 'localhost' #
+#HOST = '192.168.0.125' #
+PORT = '6600' #
+PASSWORD = False #
+CON_ID = {'host':HOST, 'port':PORT} #
 
 
 print ("...done!")
@@ -27,6 +31,9 @@ print ("...done!")
 print ("trying to get mpd_client = mpd.MPDClient()...")
 mpd_client = mpd.MPDClient()
 print("...done")
+#mpd_client = mpdInitConnection()
+if not mpdConnect(mpd_client, CON_ID):
+    exit(1)
 
 app = Flask(__name__)
 
