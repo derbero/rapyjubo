@@ -194,7 +194,7 @@ def mpdInitConnection():
     """
     Initializes a MPDClient connection.
     """
-    global mpd_client 
+    global mpd_client
     print()
     print("---------- BEGIN ---- mpdInitConnection(client) ------------")
     print("trying to connect to mpd...")
@@ -402,7 +402,19 @@ mpdping_t = threading.Thread(target=mpd_ping, args = ()) # Create thread for pin
 mpdping_t.daemon = True # Yep, it's a daemon, when main thread finish, this one will finish too
 mpdping_t.start() # Start it!
 
+# flask
+app = Flask(__name__)
 
+@app.route('/')
+def hello_world():
+    return jsonify(result='Hello World')
+
+if __name__ == '__main__':
+    app.run(debug=True,host="0.0.0.0")
+
+
+
+# main
 while (True):
     try:
         sleep(0.2)
