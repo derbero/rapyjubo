@@ -193,14 +193,14 @@ def mpdVolumeDown(channel):
             print("player already set to minimum volume: " + str(mpd_client.status()['volume']))
 
 @app.route('/playpause')
-def mpdPlayPauseToggle(channel):
+def mpdPlayPauseToggle():
     # toggle play pause
     print()
     mpd_client.pause()
     print("player in state " + str(mpd_client.status()['state']))
 
 @app.route('/next')
-def mpdNext(channel):
+def mpdNext():
     # next title
     print()
     if mpdPlaylistHasNextSong(mpd_client) is True:
@@ -210,7 +210,7 @@ def mpdNext(channel):
         print("no next song in playlist. staying with actual song: " + str(mpd_client.status()['song']))
 
 @app.route('/previous')
-def mpdPrevious(channel):
+def mpdPrevious():
     # previous title
     print()
     if mpdPlaylistHasPreviousSong(mpd_client) is True:
