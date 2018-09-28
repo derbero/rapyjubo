@@ -31,9 +31,6 @@ print ("...done!")
 print ("trying to get mpd_client = mpd.MPDClient()...")
 mpd_client = mpd.MPDClient()
 print("...done")
-#mpd_client = mpdInitConnection()
-if not mpdConnect(mpd_client, CON_ID):
-    exit(1)
 
 app = Flask(__name__)
 
@@ -259,6 +256,9 @@ def mpdLoadAndPlayPlaylist(playlistId):
         return False
 
 
+#mpd_client = mpdInitConnection()
+if not mpdConnect(mpd_client, CON_ID):
+    exit(1)
 
 
 @app.route('/')
