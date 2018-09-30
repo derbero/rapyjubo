@@ -15,11 +15,8 @@ import readchar
 from flask import Flask
 from flask import jsonify
 
+#########  MPD, GPIO PARAMETERS  ##############
 print ("Setting constants...")
-
-#global TEST_MPD_HOST, TEST_MPD_PORT, TEST_MPD_PASSWORD
-
-#########  MPD PARAMETERS  ##############
 # Only if you know what you're doing! #
 HOST = 'localhost' #
 #HOST = '192.168.0.125' #
@@ -27,23 +24,19 @@ PORT = '6600' #
 PASSWORD = False #
 CON_ID = {'host':HOST, 'port':PORT} #
 
-#TEST_MPD_HOST = "localhost"
-#TEST_MPD_PORT = "6600"
-#TEST_MPD_PASSWORD = None
-#########################################
 
+USING_MANUAL_INPUT = True
 
 POWEROFF_TIME = 10
-
-OUT_PIN_POWER = 3
-
-IN_PIN_VOLUME_UP = 12
-IN_PIN_VOLUME_DOWN = 13
-IN_PIN_TRACK_NEXT = 15
-IN_PIN_TRACK_PREVIOUS = 16
-IN_PIN_TOGGLE_PLAY_PAUSE = 11
-
+OUT_PIN_POWER = 7               # GPIO04: 07, GND: 06, POWER: 04 (5V)
+IN_PIN_VOLUME_UP = 11           # GPIO17: 11, GND: 09
+IN_PIN_VOLUME_DOWN = 13         # GPIO27: 13, GND: 14
+IN_PIN_TRACK_NEXT = 18          # GPIO24: 18, GND: 20
+IN_PIN_TRACK_PREVIOUS = 29      # GPIO05: 29, GND: 30
+IN_PIN_TOGGLE_PLAY_PAUSE = 33   # GPIO13: 33, GND: 34
 print ("...done!")
+#########################################
+
 
 
 # to use Raspberry Pi board pin numbers
@@ -190,51 +183,52 @@ def mpdCloseConnection(client):
     #print("... mpd has been killed successfully!")
     print("---------- END   ---- mpdCloseConnection(client) ------------")
 
-def mpdInitConnection():
-    """
-    Initializes a MPDClient connection.
-    """
-    global mpd_client 
-    print()
-    print("---------- BEGIN ---- mpdInitConnection(client) ------------")
-    print("trying to connect to mpd...")
-    mpd_client = mpd.MPDClient()
-    #print(mpd_client.status()['state'])
-    connected = False
-    while connected == False:
-        connected = True
-        try:
-            mpd_client.connect(TEST_MPD_HOST, TEST_MPD_PORT)
-        #except SocketError as e:
-        except mpd.ConnectionError as err:
-            if "Already connected" in err:
-                print("Error...")
-                print (err)
-                #return True, None
-                return mpd_client
-            else:
-                return False, err
-        #    connected = False
-        if connected == True and TEST_MPD_PASSWORD != None:
-            try:
-                mpd_client.password(TEST_MPD_PASSWORD)
-            except mpd.CommandError as e:
-                connected = False
-        if connected == False:
-            print("Couldn't connect to mpd. Retrying")
-            sleep(0.5)
+# def mpdInitConnection():
+#     """
+#     Initializes a MPDClient connection.
+#     """
+#     global mpd_client
+#     print()
+#     print("---------- BEGIN ---- mpdInitConnection(client) ------------")
+#     print("trying to connect to mpd...")
+#     mpd_client = mpd.MPDClient()
+#     #print(mpd_client.status()['state'])
+#     connected = False
+#     while connected == False:
+#         connected = True
+#         try:
+#             mpd_client.connect(TEST_MPD_HOST, TEST_MPD_PORT)
+#         #except SocketError as e:
+#         except mpd.ConnectionError as err:
+#             if "Already connected" in err:
+#                 print("Error...")
+#                 print (err)
+#                 #return True, None
+#                 return mpd_client
+#             else:
+#                 return False, err
+#         #    connected = False
+#         if connected == True and TEST_MPD_PASSWORD != None:
+#             try:
+#                 mpd_client.password(TEST_MPD_PASSWORD)
+#             except mpd.CommandError as e:
+#                 connected = False
+#         if connected == False:
+#             print("Couldn't connect to mpd. Retrying")
+#             sleep(0.5)
+#
+#     print("mpd connected")
+#
+#     print("mpd_client.status()['state']" + mpd_client.status()['state'])
+#     print("---------- END   ---- mpdInitConnection(client) ------------")
 
-    print("mpd connected")
-
-    print("mpd_client.status()['state']" + mpd_client.status()['state'])
-    print("---------- END   ---- mpdInitConnection(client) ------------")
 
 def mpdNumberOfSongsInPlaylist(client):
-    #print()
-    #print("---------- BEGIN ---- mpdNumberOfSongsInPlaylist(client) ------------")
+#   print()
+#   print("---------- BEGIN ---- mpdNumberOfSongsInPlaylist(client) ------------")
     playlistLength = int(client.status()['playlistlength'])
-    #print ("playlistLength: " + str(playlistLength))
-    #print("---------- END   ---- mpdNumberOfSongsInPlaylist(client) ------------")
+#   print ("playlistLength: " + str(playlistLength))
+#   print("---------- END   ---- mpdNumberOfSongsInPlaylist(client) ------------")
     return playlistLength
 
 def mpdPlaylistHasPreviousSong(client):
@@ -249,6 +243,7 @@ def mpdPlaylistHasPreviousSong(client):
         hasPrevSong = False
     print("hasPrevSong: " + str(hasPrevSong))
     return hasPrevSong
+
 
 def mpdPlaylistHasNextSong(client):
     print()
@@ -266,6 +261,7 @@ def mpdPlaylistHasNextSong(client):
     print("hasNextSong: " + str(hasNextSong))
     print("---------- END   ---- mpdPlaylistHasNextSong(client) ------------")
     return hasNextSong
+
 
 def mpdActualPlaylistSongNumber(client):
     #print
@@ -285,6 +281,8 @@ def mpdActualPlaylistSongNumber(client):
 # callback functions for the buttons
 # begin
 ##########################################
+
+
 def mpdVolumeUp(channel):
     print()
     print("---------- BEGIN ---- mpdVolumeUp ------------")
@@ -299,6 +297,7 @@ def mpdVolumeUp(channel):
         else:
             print("player already set to maximum volume: " + str(mpd_client.status()['volume']))
 
+
 def mpdVolumeDown(channel):
     # set volume to -10
     print()
@@ -312,13 +311,16 @@ def mpdVolumeDown(channel):
         else:
             print("player already set to minimum volume: " + str(mpd_client.status()['volume']))
 
+
 def mpdPlayPauseToggle(channel):
     # toggle play pause
     print()
     mpd_client.pause()
     print("player in state " + str(mpd_client.status()['state']))
 
+
 def mpdNext(channel):
+
     # next title
     print()
     if mpdPlaylistHasNextSong(mpd_client) is True:
@@ -326,6 +328,7 @@ def mpdNext(channel):
         print("player has gone to next song " + str(mpd_client.status()['song']))
     else:
         print("no next song in playlist. staying with actual song: " + str(mpd_client.status()['song']))
+
 
 def mpdPrevious(channel):
     # previous title
@@ -339,6 +342,7 @@ def mpdPrevious(channel):
 # callback functions for the buttons
 # end
 ##########################################
+
 
 def mpdLoadAndPlayPlaylist(playlistId):
     #global mpd_client
@@ -421,56 +425,57 @@ while (True):
                     break
                 playlistLoadedSuccessfully = mpdLoadAndPlayPlaylist(rfid_input)
                 loadNewPlaylist = False
-#        manual_control_input = str(input("enter command: "))
-        print ("enter command: ")
-        manual_control_input = readchar.readkey()
-        print("command entered: " + str(manual_control_input) + "; type of input: " + str(type(manual_control_input)))
+        if USING_MANUAL_INPUT:
+    #        manual_control_input = str(input("enter command: "))
+            print ("enter command: ")
+            manual_control_input = readchar.readkey()
+            print("command entered: " + str(manual_control_input) + "; type of input: " + str(type(manual_control_input)))
 
-        print ("trying to execute command...")
-        print("Volume status: " + str(mpd_client.status()['volume']))
-        #print("Type: " + str(type(mpd_client.status()['volume'])))
+            print ("trying to execute command...")
+            print("Volume status: " + str(mpd_client.status()['volume']))
+            #print("Type: " + str(type(mpd_client.status()['volume'])))
 
-        if (manual_control_input == 's'):
-            # toggle play pause
-            #mpd_client.pause()
-            #print("player in state " + mpd_client.status()['state'])
-            mpdPlayPauseToggle(None)
-        elif (manual_control_input == 'w'):
-            # set volume to +10
-            #if (int(mpd_client.status()['volume']) <= 90):
-            #    mpd_client.setvol(int(mpd_client.status()['volume']) + 10)
-            #    print ("player volume set up to " + mpd_client.status()['volume'])
-            #else:
-            #    print("player already set to maximum volume: " + mpd_client.status()['volume'])
-            mpdVolumeUp(None)
-        elif (manual_control_input == 'x'):
-            # set volume to -10
-            #if (int(mpd_client.status()['volume']) >= 10):
-            #    mpd_client.setvol(int(mpd_client.status()['volume']) - 10)
-            #    print("player volume set down to " + mpd_client.status()['volume'])
-            #else:
-            #    print("player already set to minimum volume: " + mpd_client.status()['volume'])
-            mpdVolumeDown(None)
-        elif (manual_control_input == 'a'):
-            # previous title
-            #mpd_client.previous()
-            #print("player has gone to song " + mpd_client.status()['songid'])
-            mpdPrevious(None)
-        elif (manual_control_input == 'd'):
-            # previous title
-            #mpd_client.next()
-            #print ("player has gone to song " + mpd_client.status()['songid'])
-            mpdNext(None)
-        elif (manual_control_input == 'l'):
-            # go to beginning of while to be able to load new playlist
-            loadNewPlaylist = True
-            continue
-        else:
-            print("GPIO.cleanup()...")
-            GPIO.cleanup()
-            print("GPIO.cleanup()... done")
-            mpdCloseConnection(mpd_client)
-            break
+            if (manual_control_input == 's'):
+                # toggle play pause
+                #mpd_client.pause()
+                #print("player in state " + mpd_client.status()['state'])
+                mpdPlayPauseToggle(None)
+            elif (manual_control_input == 'w'):
+                # set volume to +10
+                #if (int(mpd_client.status()['volume']) <= 90):
+                #    mpd_client.setvol(int(mpd_client.status()['volume']) + 10)
+                #    print ("player volume set up to " + mpd_client.status()['volume'])
+                #else:
+                #    print("player already set to maximum volume: " + mpd_client.status()['volume'])
+                mpdVolumeUp(None)
+            elif (manual_control_input == 'x'):
+                # set volume to -10
+                #if (int(mpd_client.status()['volume']) >= 10):
+                #    mpd_client.setvol(int(mpd_client.status()['volume']) - 10)
+                #    print("player volume set down to " + mpd_client.status()['volume'])
+                #else:
+                #    print("player already set to minimum volume: " + mpd_client.status()['volume'])
+                mpdVolumeDown(None)
+            elif (manual_control_input == 'a'):
+                # previous title
+                #mpd_client.previous()
+                #print("player has gone to song " + mpd_client.status()['songid'])
+                mpdPrevious(None)
+            elif (manual_control_input == 'd'):
+                # previous title
+                #mpd_client.next()
+                #print ("player has gone to song " + mpd_client.status()['songid'])
+                mpdNext(None)
+            elif (manual_control_input == 'l'):
+                # go to beginning of while to be able to load new playlist
+                loadNewPlaylist = True
+                continue
+            else:
+                print("GPIO.cleanup()...")
+                GPIO.cleanup()
+                print("GPIO.cleanup()... done")
+                mpdCloseConnection(mpd_client)
+                break
         print ("mpd status " + str(mpd_client.status()))
 #    except:
 #    print("Exception raised.")
