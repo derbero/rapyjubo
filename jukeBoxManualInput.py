@@ -20,7 +20,7 @@ print ("Setting constants...")
 # Only if you know what you're doing! #
 HOST = 'localhost' #
 #HOST = '192.168.0.125' #
-PORT = '6600' #
+PORT = '6601' #
 PASSWORD = False #
 CON_ID = {'host':HOST, 'port':PORT} #
 
