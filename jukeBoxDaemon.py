@@ -430,7 +430,10 @@ while (True):
         if loadNewPlaylist == True:
             playlistLoadedSuccessfully = False
             while(not playlistLoadedSuccessfully):
-                rfid_input = str(raw_input('Enter your playlist:')) # python2: raw_input; python3: input
+                try:
+			rfid_input = str(raw_input('Enter your playlist:')) # python2: raw_input; python3: input
+		except EOFError:
+			return
                 # hier sollte noch ein logging hin, damit die IDs der Karten irgendwo sichtbar werden
 		#logging.debug('This message should go to the log file')
 		logging.info('RFID card read with ID: ' + str(rfid_input))
