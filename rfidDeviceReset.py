@@ -8,7 +8,7 @@ print ("Now: ",strftime("%Y-%m-%d %H:%M:%S", gmtime()))
 
 
 # find our device
-dev = usb.core.find(idVendor=0x04d8, idProduct=0x0080)
+dev = usb.core.find(idVendor=0xffff, idProduct=0x0035)
 
 # was it found?
 if dev is None:
