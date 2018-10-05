@@ -22,7 +22,7 @@ def readRFID(rfid):
 	return uid
 	
 
-def resetUSBconnection()
+def resetUSBconnection():
     VENDOR_ID = 0xffff
     PRODUCT_ID = 0x0035
     DATA_SIZE = 1
