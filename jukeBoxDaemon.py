@@ -37,6 +37,7 @@ CON_ID = {'host':HOST, 'port':PORT} #
 
 
 
+
 POWEROFF_TIME = 10
 OUT_PIN_POWER = 7               # GPIO04: 07, GND: 06, POWER: 04 (5V)
 IN_PIN_VOLUME_UP = 11           # GPIO17: 11, GND: 09
