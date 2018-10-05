@@ -54,6 +54,6 @@ def resetUSBconnection():
 resetUSBconnection()
 rfid = initRFID()
 while True:
-	sleep(1)
+	time.sleep(1)
 	card = readRFID(rfid)
 	print ("Card read: " + str(card))
