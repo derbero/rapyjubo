@@ -20,11 +20,11 @@ def getData():
                 sys.exit("Could not detach kernel driver: %s" % str(e))
     else:
         print "no kernel driver attached"
-    try:
-        usb.util.claim_interface(device, 0)
-        print "claimed device"
-    except:
-        sys.exit("Could not claim the device: %s" % str(e))
+#    try:
+#        usb.util.claim_interface(device, 0)
+#        print "claimed device"
+#    except:
+#        sys.exit("Could not claim the device: %s" % str(e))
     try:
         device.set_configuration()
         device.reset()
