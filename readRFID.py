@@ -1,4 +1,4 @@
-from rfidhid.core import RfidHid
+from pyrfidhid.rfidhid.core import RfidHid
 
 try:
     # Try to open RFID device using default vid:pid (ffff:0035)
