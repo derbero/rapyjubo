@@ -2,6 +2,7 @@ from rfidhid.core import RfidHid
 import usb.core
 import usb.util
 import sys
+import time
 
 def initRFID():
 	try:
