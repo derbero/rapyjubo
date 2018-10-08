@@ -433,7 +433,7 @@ GPIO.add_event_detect(IN_PIN_TOGGLE_PLAY_PAUSE, GPIO.RISING, callback=mpdPlayPau
 mpdConnected = mpdConnect(mpd_client, CON_ID)
 while (not mpdConnected):
 	sleep(1)
-    mpdConnected = mpdConnect(mpd_client, CON_ID)
+    	mpdConnected = mpdConnect(mpd_client, CON_ID)
 
 #print("trying to clear...")
 #mpd_client.clear()
