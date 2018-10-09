@@ -200,7 +200,7 @@ def mpdConnect(client, con_id):
    try:
        client.connect(**con_id)
    except SocketError as err:
-       print("... mpd connection FAILED: " + err)
+       print("... mpd connection FAILED: " + str(err))
        return False
    print("... mpd connection SUCCESSFULL")
    print("mpd_client.status()['state']: " + mpd_client.status()['state'])
