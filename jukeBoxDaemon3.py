@@ -473,15 +473,15 @@ while (True):
                     print("Waiting for RFID card input:")
                     rfid_input = str(swipe()) # python2: raw_input; python3: input
                     #rfid_input = str(raw_input('Enter your playlist:'))
-                    #  python2: raw_input; python3: input
-		            print("Card read: " + rfid_input)
+                    #python2: raw_input; python3: input
+    	            print("Card read: " + rfid_input)
                 except EOFError:
                     continue
                     # hier sollte noch ein logging hin, damit die IDs der Karten irgendwo sichtbar werden
                 #logging.debug('This message should go to the log file')
                 logging.info('RFID card read with ID: ' + str(rfid_input))
                 #logging.warning('And this, too')
-	            if(rfid_input == 'x'):
+                if(rfid_input == 'x'):
                     break
                 playlistLoadedSuccessfully = mpdLoadAndPlayPlaylist(rfid_input)
                 loadNewPlaylist = False
