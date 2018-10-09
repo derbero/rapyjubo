@@ -1,10 +1,13 @@
- [Unit]
- Description=My Jukebox Service
- After=multi-user.target
+[Unit]
+Description=My Jukebox Service
+After=multi-user.target
 
- [Service]
- Type=idle
- ExecStart=/usr/bin/python /home/pi/rapyjubo/jukeBoxDaemon.py > /home/pi/rapyjubo/jukeBoxDaemon.log 2>&1
+[Service] 
+Type=idle 
+ExecStart=/usr/bin/python/home/pi/rapyjubo/jukeBoxDaemon.py > /home/pi/rapyjubo/jukeBoxDaemon.log 2>&1
+WorkingDirectory=/home/pi/rapyjubo
+Restart=always
+User=pi
 
- [Install]
- WantedBy=multi-user.target
+[Install]
+WantedBy=multi-user.target
