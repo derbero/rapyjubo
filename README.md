@@ -21,6 +21,11 @@ Bus 001 Device 003: ID 0424:2514 Standard Microsystems Corp. USB 2.0 Hub
 Bus 001 Device 002: ID 0424:2514 Standard Microsystems Corp. USB 2.0 Hub
 Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 
+make the USB sound card index=0
+$ sudo nano /etc/modprobe.d/alsa-base.conf:
+options snd_usb_audio index=0
+options snd_bcm2835 index=1
+
 Check whether the sound cards are found:
 $ cat /proc/asound/cards
  0 [Device         ]: USB-Audio - USB Audio Device
@@ -28,10 +33,7 @@ $ cat /proc/asound/cards
  1 [ALSA           ]: bcm2835_alsa - bcm2835 ALSA
                       bcm2835 ALSA
 
-$ sudo nano /etc/modprobe.d/alsa-base.conf:
-options snd_usb_audio index=0
-options snd_bcm2835 index=1
-
+The 0 is the USB sound card index I set a little earlier
 $ sudo nano /etc/asound.conf
 defaults.pcm.!card 0
 defaults.ctl.!card 0
@@ -53,6 +55,10 @@ card 1: ALSA [bcm2835 ALSA], device 1: bcm2835 ALSA [bcm2835 IEC958/HDMI]
   Subdevices: 1/1
   Subdevice #0: subdevice #0
 
+Test the sound (will output a noise from left to right and back):
+$ speaker-test -c2
+
+
     
 <h3>RFID reader</h3>
 The RFID reader is tricky to get input from as it behaves like a keyboard entering the number and <Enter>. Running in headless mode I had to do this to get the input to the shell.
@@ -61,7 +67,13 @@ Set up a udev rule to grant only this user access to your RFID reader:
 $ sudo nano /etc/udev/rules.d/80-rfid.rules
 SUBSYSTEMS=="usb" ATTRS{idVendor}=="ffff" ATTRS{idProduct}=="0035"  MODE:="0660" SYMLINK+="RFID" OWNER="pi"
 
+
+
 projects I came from:
+https://blog.mwiedemeyer.de/post/2017/Musikbox-fur-Kind-2/
+http://www.linux-community.de/ausgaben/linuxuser/2013/07/raspberry-pi-zur-miniatur-musikzentrale-ausbauen/
+
+
 
 
 Making it a service:
@@ -76,6 +88,10 @@ ExecStart=/usr/bin/python /home/pi/rapyjubo/jukeBoxDaemon3.py > /home/pi/rapyjub
 [Install]
 WantedBy=multi-user.target
 
+Start / stop / status service 
+$ sudo systemctl start jukeboxdaemon.service
+$ sudo systemctl stop jukeboxdaemon.service
+$ sudo systemctl status jukeboxdaemon.service
 
 References:
 https://raspberrypi.stackexchange.com/questions/5475/usb-sound-card-found-but-no-output
