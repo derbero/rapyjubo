@@ -7,10 +7,12 @@ usb sound card
 ...
 
 
-configuration:
-alsa / sound related things:
+<h2>configuration:</h2>
+<h3>alsa / sound related things:</h3>
 
 List USB devices:
+The first entry in the list is the RFID reader: vendor: ffff; product: 0035
+Second entry is the sound card: vendor: 0d8c; product: 0014 
 $ lsusb
 Bus 001 Device 004: ID ffff:0035
 Bus 001 Device 006: ID 0d8c:0014 C-Media Electronics, Inc.
@@ -19,18 +21,20 @@ Bus 001 Device 003: ID 0424:2514 Standard Microsystems Corp. USB 2.0 Hub
 Bus 001 Device 002: ID 0424:2514 Standard Microsystems Corp. USB 2.0 Hub
 Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 
-Check whether the sound cards are found
+Check whether the sound cards are found:
 $ cat /proc/asound/cards
  0 [Device         ]: USB-Audio - USB Audio Device
                       C-Media Electronics Inc. USB Audio Device at usb-3f980000.usb-1.1.2, full speed
  1 [ALSA           ]: bcm2835_alsa - bcm2835 ALSA
                       bcm2835 ALSA
 
-
-The first entry in the list is the RFID reader: vendor: ffff; 
 $ sudo nano /etc/modprobe.d/alsa-base.conf:
 options snd_usb_audio index=0
 options snd_bcm2835 index=1
+
+$ sudo nano /etc/asound.conf
+defaults.pcm.!card 0
+defaults.ctl.!card 0
 
 $ aplay -l
 card 0: Device [USB Audio Device], device 0: USB Audio [USB Audio]
@@ -50,6 +54,12 @@ card 1: ALSA [bcm2835 ALSA], device 1: bcm2835 ALSA [bcm2835 IEC958/HDMI]
   Subdevice #0: subdevice #0
 
     
+<h3>RFID reader</h3>
+The RFID reader is tricky to get input from as it behaves like a keyboard entering the number and <Enter>. Running in headless mode I had to do this to get the input to the shell.
+
+Set up a udev rule to grant only this user access to your RFID reader:
+$ sudo nano /etc/udev/rules.d/80-rfid.rules
+SUBSYSTEMS=="usb" ATTRS{idVendor}=="ffff" ATTRS{idProduct}=="0035"  MODE:="0660" SYMLINK+="RFID" OWNER="pi"
 
 projects I came from:
 
@@ -68,3 +78,6 @@ WantedBy=multi-user.target
 
 
 References:
+https://raspberrypi.stackexchange.com/questions/5475/usb-sound-card-found-but-no-output
+https://www.dexterindustries.com/howto/run-a-program-on-your-raspberry-pi-at-startup/
+https://github.com/Fuzzwah/xbmc-rfid-music
