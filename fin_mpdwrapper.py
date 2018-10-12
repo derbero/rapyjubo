@@ -34,7 +34,7 @@ def mpdConnect(client, con_id):
        print("... mpd connection FAILED: " + str(err))
        return False
    print("... mpd connection SUCCESSFULL")
-   print("mpd_client.status()['state']: " + mpd_client.status()['state'])
+   print("mpd_client.status()['state']: " + client.status()['state'])
    print("---------- END   ---- mpdConnect(client, con_id) ------------")
    return True
 
@@ -153,71 +153,6 @@ def mpdActualPlaylistSongNumber(client):
 
 
 
-##########################################
-# callback functions for the buttons
-# begin
-##########################################
-
-
-def mpdVolumeUp(channel):
-    print()
-    print("---------- BEGIN ---- mpdVolumeUp ------------")
-    # set volume to +10
-    if (int(mpd_client.status()['volume']) <= 90):
-        mpd_client.setvol(int(mpd_client.status()['volume']) + 10)
-        print ("player volume set up to " + str(mpd_client.status()['volume']))
-    else:
-        if(int(mpd_client.status()['volume']) < 100):
-            mpd_client.setvol(100)
-            print ("player volume set up to " + str(mpd_client.status()['volume']))
-        else:
-            print("player already set to maximum volume: " + str(mpd_client.status()['volume']))
-
-
-def mpdVolumeDown(channel):
-    # set volume to -10
-    print()
-    if (int(mpd_client.status()['volume']) >= 10):
-        mpd_client.setvol(int(mpd_client.status()['volume']) - 10)
-        print("player volume set down to " + str(mpd_client.status()['volume']))
-    else:
-        if (int(mpd_client.status()['volume']) > 0):
-            mpd_client.setvol(0)
-            print ("player volume set up to " + str(mpd_client.status()['volume']))
-        else:
-            print("player already set to minimum volume: " + str(mpd_client.status()['volume']))
-
-
-def mpdPlayPauseToggle(channel):
-    # toggle play pause
-    print()
-    mpd_client.pause()
-    print("player in state " + str(mpd_client.status()['state']))
-
-
-def mpdNext(channel):
-
-    # next title
-    print()
-    if mpdPlaylistHasNextSong(mpd_client) is True:
-        mpd_client.next()
-        print("player has gone to next song " + str(mpd_client.status()['song']))
-    else:
-        print("no next song in playlist. staying with actual song: " + str(mpd_client.status()['song']))
-
-
-def mpdPrevious(channel):
-    # previous title
-    print()
-    if mpdPlaylistHasPreviousSong(mpd_client) is True:
-        mpd_client.previous()
-        print ("player has gone to previous song " + str(mpd_client.status()['song']))
-    else:
-        print("no previous song in playlist. staying with actual song: " + str(mpd_client.status()['song']))
-##########################################
-# callback functions for the buttons
-# end
-##########################################
 
 
 def mpdLoadAndPlayPlaylist(playlistId):

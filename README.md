@@ -67,16 +67,7 @@ Set up a udev rule to grant only this user access to your RFID reader:
 $ sudo nano /etc/udev/rules.d/80-rfid.rules
 SUBSYSTEMS=="usb" ATTRS{idVendor}=="ffff" ATTRS{idProduct}=="0035"  MODE:="0660" SYMLINK+="RFID" OWNER="pi"
 
-
-
-projects I came from:
-https://blog.mwiedemeyer.de/post/2017/Musikbox-fur-Kind-2/
-http://www.linux-community.de/ausgaben/linuxuser/2013/07/raspberry-pi-zur-miniatur-musikzentrale-ausbauen/
-
-
-
-
-Making it a service:
+<h2>Making it a service:</h2>
 <br>[Unit]
 Description=My Jukebox Service
 After=multi-user.target
@@ -93,7 +84,11 @@ $ sudo systemctl start jukeboxdaemon.service
 $ sudo systemctl stop jukeboxdaemon.service
 $ sudo systemctl status jukeboxdaemon.service
 
-References:
+<h2>Inspiring projects:</h2>
+https://blog.mwiedemeyer.de/post/2017/Musikbox-fur-Kind-2/
+http://www.linux-community.de/ausgaben/linuxuser/2013/07/raspberry-pi-zur-miniatur-musikzentrale-ausbauen/
+
+<h2>References:</h2>
 https://raspberrypi.stackexchange.com/questions/5475/usb-sound-card-found-but-no-output
 https://www.dexterindustries.com/howto/run-a-program-on-your-raspberry-pi-at-startup/
 https://github.com/Fuzzwah/xbmc-rfid-music
