@@ -2,22 +2,7 @@
 # -*- coding: utf-8 -*-
 from time import sleep, time
 
-##########################################
-# thread ping function
-# begin
-##########################################
-# We have to ping MPD client for buttons to avoid losing connection
-# By default, MPD will close connection after 60 seconds of inactivity
-def mpd_ping(client):
-    while True:
-        sleep(50) # We will ping it every 50 seconds
-        #print "Pinging MPD..."
-        #client_cntrl.ping() # Ping it!
-        print ("mpd_client.ping(): ") + str(client.ping())
-##########################################
-# thread ping function
-# end
-##########################################
+
 
 ##########################################
 # some internal mpd functions
