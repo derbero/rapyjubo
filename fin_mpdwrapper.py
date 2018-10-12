@@ -1,15 +1,19 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+from time import sleep, time
+
 ##########################################
 # thread ping function
 # begin
 ##########################################
 # We have to ping MPD client for buttons to avoid losing connection
 # By default, MPD will close connection after 60 seconds of inactivity
-def mpd_ping():
+def mpd_ping(client):
     while True:
         sleep(50) # We will ping it every 50 seconds
         #print "Pinging MPD..."
         #client_cntrl.ping() # Ping it!
-        print ("mpd_client.ping(): ") + str(mpd_client.ping())
+        print ("mpd_client.ping(): ") + str(client.ping())
 ##########################################
 # thread ping function
 # end
@@ -155,22 +159,22 @@ def mpdActualPlaylistSongNumber(client):
 
 
 
-def mpdLoadAndPlayPlaylist(playlistId):
+def mpdLoadAndPlayPlaylist(client, playlistId):
     #global mpd_client
     try:
         print()
         print("trying to clear playlist ...")
-        mpd_client.clear()
+        client.clear()
         print("... playlist cleared")
         try:
             print()
             print("trying to load playlist..." + str(playlistId))
-            mpd_client.load(str(playlistId))
+            client.load(str(playlistId))
             print("... playlist " + str(playlistId) + " loaded successfully")
             try:
                 print()
                 print("trying to start playing ...")
-                mpd_client.play(0)
+                client.play(0)
                 print("... playing")
                 return True
             except:

@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 # which device is your RFID reader?
 rfidreader = "/dev/input/event0"
 

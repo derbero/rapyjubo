@@ -252,7 +252,7 @@ loadNewPlaylist = True
 
 
 # MPD Ping Thread
-mpdping_t = threading.Thread(target=mpd_ping, args = ()) # Create thread for pinging MPD
+mpdping_t = threading.Thread(target=mpd_ping, args = (mpd_client)) # Create thread for pinging MPD
 mpdping_t.daemon = True # Yep, it's a daemon, when main thread finish, this one will finish too
 mpdping_t.start() # Start it!
 
