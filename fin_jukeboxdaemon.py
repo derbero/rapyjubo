@@ -301,6 +301,7 @@ while (True):
                     break
                 playlistLoadedSuccessfully = mpdLoadAndPlayPlaylist(mpd_client, rfid_input)
                 loadNewPlaylist = False
+                print ("mpd status " + str(mpd_client.status()))
         if USING_MANUAL_INPUT:
     #        manual_control_input = str(input("enter command: "))
             print ("enter command: ")
@@ -352,7 +353,7 @@ while (True):
                 print("GPIO.cleanup()... done")
                 mpdCloseConnection(mpd_client)
                 break
-        print ("mpd status " + str(mpd_client.status()))
+        #print ("mpd status " + str(mpd_client.status()))
 #    except:
 #    print("Exception raised.")
     except KeyboardInterrupt: #Strg-C wird gedrückt
