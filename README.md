@@ -67,6 +67,16 @@ Set up a udev rule to grant only this user access to your RFID reader:
 $ sudo nano /etc/udev/rules.d/80-rfid.rules
 SUBSYSTEMS=="usb" ATTRS{idVendor}=="ffff" ATTRS{idProduct}=="0035"  MODE:="0660" SYMLINK+="RFID" OWNER="pi"
 
+
+<h3>Mopidy</h3>
+
+
+
+<h3>pigpiod</h3>
+
+
+
+
 <h2>Making it a service:</h2>
 <br>[Unit]
 Description=My Jukebox Service
@@ -83,6 +93,14 @@ Start / stop / status service
 $ sudo systemctl start jukeboxdaemon.service
 $ sudo systemctl stop jukeboxdaemon.service
 $ sudo systemctl status jukeboxdaemon.service
+
+
+
+
+
+
+
+
 
 <h2>Inspiring projects:</h2>
 https://blog.mwiedemeyer.de/post/2017/Musikbox-fur-Kind-2/
