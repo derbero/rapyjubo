@@ -299,7 +299,7 @@ while (True):
                 #logging.warning('And this, too')
                 if(rfid_input == 'x'):
                     break
-                playlistLoadedSuccessfully = mpdLoadAndPlayPlaylist(rfid_input)
+                playlistLoadedSuccessfully = mpdLoadAndPlayPlaylist(mpd_client, rfid_input)
                 loadNewPlaylist = False
         if USING_MANUAL_INPUT:
     #        manual_control_input = str(input("enter command: "))
