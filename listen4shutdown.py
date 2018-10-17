@@ -10,9 +10,9 @@ from subprocess import call
 from datetime import datetime
 import time
 
-# pushbutton: NC connected to GPIO 27, normally closed and opens at button press
-# we want a shutdown if button is pressed meaning  GPIO 27 opens
-shutdownPin = 27
+# pushbutton: NC connected to GPIO 4 (former entry: 27), normally closed, and opens at button press
+# we want a shutdown if button is pressed meaning  GPIO 4 (former entry: 27) opens
+shutdownPin = 4 
 
 # button debounce time in seconds
 debounceSeconds = 0.01
@@ -29,27 +29,27 @@ def buttonStateChanged(pin):
  global buttonPressedTime
 
  if not (GPIO.input(pin)):
- # button is down
- print("not GPIO.input(pin)")
- # if buttonPressedTime is None:
+         # button is down
+         print("not GPIO.input(pin)")
+         # if buttonPressedTime is None:
          buttonPressedTime = datetime.now()
  else:
- print("GPIO.input(pin):")
- print(pin)
- # button is up
- #if buttonPressedTime is not None:
- elapsed = (datetime.now() - buttonPressedTime).total_seconds()
- buttonPressedTime = datetime.now()
+         print("GPIO.input(pin):")
+         print(pin)
+         # button is up
+         #if buttonPressedTime is not None:
+         elapsed = (datetime.now() - buttonPressedTime).total_seconds()
+         buttonPressedTime = datetime.now()
  if elapsed >= debounceSeconds:
- # button pressed for a shorter time, also shutdown
- call(['shutdown', '-h', 'now'], shell=False)
+         # button pressed for a shorter time, also shutdown
+         call(['shutdown', '-h', 'now'], shell=False)
 
 
 # subscribe to button presses
 GPIO.add_event_detect(shutdownPin, GPIO.BOTH, callback=buttonStateChanged)
 
 while True:
- # sleep to reduce unnecessary CPU usage
-     time.sleep(5)
+         # sleep to reduce unnecessary CPU usage
+         time.sleep(5)
 
 GPIO.cleanup()
