@@ -14,6 +14,11 @@ import time
 # we want a shutdown if button is pressed meaning  GPIO 4 (former entry: 27) opens
 shutdownPin = 4 
 
+# power button has a LED that is connected to GND and GPIO 23
+# goal is to let it blink for some time when we are shutting down
+ledPin = 23
+ledState = False
+
 # button debounce time in seconds
 debounceSeconds = 0.01
 
@@ -21,6 +26,7 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(shutdownPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 #GPIO.setup(shutdownPin, GPIO.IN)
 #GPIO.setup(shutdownPin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(ledPin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 buttonPressedTime = datetime.now()
 
@@ -42,6 +48,12 @@ def buttonStateChanged(pin):
          buttonPressedTime = datetime.now()
  if elapsed >= debounceSeconds:
          # button pressed for a shorter time, also shutdown
+         # toggle / blink ledPin for a while
+         for i in range(1,6):
+             ledState = not ledState
+             GPIO.output(LED, ledState)
+             sleep(1)
+         # shutdown  
          call(['shutdown', '-h', 'now'], shell=False)
 
 
