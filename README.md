@@ -1,10 +1,10 @@
 <h1>raspberryPythonJukeBox (rapyjubo)</h1>
 <br>
 I wanted to build a musicbox that when powered on could read RFID cards to play music. This music should either be local music or Spotify or a web radio station...
-a music juke box project with a headless Rasperry Pi
-Shopping card:
-usb sound card
-...
+a music juke box project with a headless Rasperry Pi coded in Python.
+<br>Shopping card:
+<br>usb sound card
+<br>...
 
 
 <h2>configuration:</h2>
