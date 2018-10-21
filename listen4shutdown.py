@@ -13,7 +13,7 @@ from time import sleep
 
 # pushbutton: NC connected to GPIO 4 (former entry: 27), normally closed, and opens at button press
 # we want a shutdown if button is pressed meaning  GPIO 4 (former entry: 27) opens
-shutdownPin = 04
+shutdownPin = 4
 
 # power button has a LED that is connected to GND and GPIO 23
 # goal is to let it blink for some time when we are shutting down
@@ -62,8 +62,8 @@ def buttonStateChanged(pin):
               call(['shutdown', '-h', 'now'], shell=False)
 
 # subscribe to button presses
-GPIO.add_event_detect(shutdownPin, GPIO.BOTH, callback=buttonStateChanged, bouncetime=100)
-#GPIO.add_event_detect(shutdownPin, GPIO.BOTH, callback=buttonStateChanged)
+#GPIO.add_event_detect(shutdownPin, GPIO.BOTH, callback=buttonStateChanged, bouncetime=100)
+GPIO.add_event_detect(shutdownPin, GPIO.BOTH, callback=buttonStateChanged)
 
 while True:
          # sleep to reduce unnecessary CPU usage
