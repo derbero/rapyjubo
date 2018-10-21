@@ -42,6 +42,7 @@ def buttonStateChanged(pin):
          # button is down
          print("not GPIO.input(pin)")
          # if buttonPressedTime is None:
+         elapsed = 0 
          buttonPressedTime = datetime.now()
  else:
          print("GPIO.input(pin):")
