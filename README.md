@@ -78,22 +78,35 @@ SUBSYSTEMS=="usb" ATTRS{idVendor}=="ffff" ATTRS{idProduct}=="0035"  MODE:="0660"
 
 
 <h2>Making it a service:</h2>
+create a file and call it jukeboxdaemon.service.
+Into that file copy and paste this:
+<code>
 <br>[Unit]
-Description=My Jukebox Service
-After=multi-user.target
-
-[Service]
-Type=idle
-ExecStart=/usr/bin/python /home/pi/rapyjubo/jukeBoxDaemon3.py > /home/pi/rapyjubo/jukeBoxDaemon.log 2>&1
-
-[Install]
-WantedBy=multi-user.target
-
-Start / stop / status service 
-$ sudo systemctl start jukeboxdaemon.service
-$ sudo systemctl stop jukeboxdaemon.service
-$ sudo systemctl status jukeboxdaemon.service
-
+<br>Description=My Jukebox Service
+<br>After=multi-user.target
+<br>
+<br>[Service]
+<br>Type=idle
+<br>ExecStart=/usr/bin/python /home/pi/rapyjubo/jukeBoxDaemon3.py > /home/pi/rapyjubo/jukeBoxDaemon.log 2>&1
+<br>
+<br>[Install]
+<br>WantedBy=multi-user.target
+</code>
+<br>
+Now move that file to /lib/systemd/system/jukeboxdaemon.service.
+Set permisson to 644:
+sudo chmod 644 /lib/systemd/system/sample.service
+Now the unit file has been defined we can tell systemd to start it during the boot sequence :
+sudo systemctl daemon-reload
+sudo systemctl enable jukeboxdaemon.service
+Reboot the Pi and your custom service should run:
+sudo reboot
+<br>Start / stop / status service 
+<code>
+<br>$ sudo systemctl start jukeboxdaemon.service
+<br>$ sudo systemctl stop jukeboxdaemon.service
+<br>$ sudo systemctl status jukeboxdaemon.service
+</code>
 
 
 
