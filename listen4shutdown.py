@@ -47,6 +47,7 @@ def buttonStateChanged(pin):
          # button is up
          #if buttonPressedTime is not None:
          elapsed = (datetime.now() - buttonPressedTime).total_seconds()
+         print ("elapsed: " + str(elapsed))
          buttonPressedTime = datetime.now()
 
          if elapsed >= debounceSeconds:
