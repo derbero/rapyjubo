@@ -47,11 +47,11 @@ def buttonStateChanged(pin):
          #if buttonPressedTime is not None:
          elapsed = (datetime.now() - buttonPressedTime).total_seconds()
          buttonPressedTime = datetime.now()
- 
+
  if elapsed >= debounceSeconds:
          # button pressed for a shorter time, also shutdown
          # toggle / blink ledPin for a while
-         for i in range(1,6):
+         for i in range(1, 6):
              ledState = not ledState
              GPIO.output(LED, ledState)
              sleep(1)
