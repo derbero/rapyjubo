@@ -16,7 +16,7 @@ ledState = False
 debounceSeconds = 0.01
 
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(ledPin, GPIO.OUT, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(ledPin, GPIO.OUT, initial=0)
 
 GPIO.output(ledPin, True)
 sleep(1)

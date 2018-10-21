@@ -27,7 +27,7 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(shutdownPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 #GPIO.setup(shutdownPin, GPIO.IN)
 #GPIO.setup(shutdownPin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-GPIO.setup(ledPin, GPIO.OUT, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(ledPin, GPIO.OUT, initial = 0)
 
 buttonPressedTime = datetime.now()
 elapsed = 0
