@@ -21,7 +21,8 @@ ledPin = 23
 ledState = False
 
 # button debounce time in seconds
-debounceSeconds = 0.01
+#debounceSeconds = 0.01
+debounceSeconds = 0.5
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(shutdownPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
