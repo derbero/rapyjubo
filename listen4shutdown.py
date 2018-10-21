@@ -9,6 +9,7 @@ import RPi.GPIO as GPIO
 from subprocess import call
 from datetime import datetime
 import time
+from time import sleep
 
 # pushbutton: NC connected to GPIO 4 (former entry: 27), normally closed, and opens at button press
 # we want a shutdown if button is pressed meaning  GPIO 4 (former entry: 27) opens
@@ -53,7 +54,7 @@ def buttonStateChanged(pin):
          # toggle / blink ledPin for a while
          for i in range(1, 6):
              ledState = not ledState
-             GPIO.output(LED, ledState)
+             GPIO.output(ledPin, ledState)
              sleep(1)
          # shutdown  
          call(['shutdown', '-h', 'now'], shell=False)

@@ -4,6 +4,7 @@ import RPi.GPIO as GPIO
 from subprocess import call
 from datetime import datetime
 import time
+from time import sleep
 
 
 # power button has a LED that is connected to GND and GPIO 23
@@ -17,15 +18,15 @@ debounceSeconds = 0.01
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(ledPin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
-GPIO.output(LED, True)
+GPIO.output(ledPin, True)
 sleep(1)
-GPIO.output(LED, False)
+GPIO.output(ledPin, False)
 sleep(1)
-GPIO.output(LED, True)
+GPIO.output(ledPin, True)
 sleep(1)
-GPIO.output(LED, False)
+GPIO.output(ledPin, False)
 sleep(1)
-GPIO.output(LED, True)
+GPIO.output(ledPin, True)
 sleep(1)
-GPIO.output(LED, False)
+GPIO.output(ledPin, False)
 sleep(1)
