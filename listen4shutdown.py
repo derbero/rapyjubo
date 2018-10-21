@@ -42,7 +42,7 @@ def buttonStateChanged(pin):
          # button is down
          print("not GPIO.input(pin)")
          # if buttonPressedTime is None:
-         elapsed = 0 
+         elapsed = 0
          buttonPressedTime = datetime.now()
  else:
          print("GPIO.input(pin):")
@@ -53,15 +53,15 @@ def buttonStateChanged(pin):
          print ("elapsed: " + str(elapsed))
          buttonPressedTime = datetime.now()
 
-         if elapsed >= debounceSeconds:
-              # button pressed for a shorter time, also shutdown
-              # toggle / blink ledPin for a while
-              for i in range(1, 11):
-                  ledState = not ledState
-                  GPIO.output(ledPin, ledState)
-                  sleep(0.1)
-              # shutdown
-              call(['shutdown', '-h', 'now'], shell=False)
+ if elapsed >= debounceSeconds:
+      # button pressed for a shorter time, also shutdown
+      # toggle / blink ledPin for a while
+      for i in range(1, 11):
+          ledState = not ledState
+          GPIO.output(ledPin, ledState)
+          sleep(0.1)
+      # shutdown
+      call(['shutdown', '-h', 'now'], shell=False)
 
 # subscribe to button presses
 GPIO.add_event_detect(shutdownPin, GPIO.BOTH, callback=buttonStateChanged, bouncetime=400)
