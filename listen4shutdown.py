@@ -55,10 +55,10 @@ def buttonStateChanged(pin):
          if elapsed >= debounceSeconds:
               # button pressed for a shorter time, also shutdown
               # toggle / blink ledPin for a while
-              for i in range(1, 6):
+              for i in range(1, 11):
                   ledState = not ledState
                   GPIO.output(ledPin, ledState)
-                  sleep(1)
+                  sleep(0.1)
               # shutdown
               call(['shutdown', '-h', 'now'], shell=False)
 
