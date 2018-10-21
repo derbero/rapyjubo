@@ -22,7 +22,7 @@ ledState = False
 
 # button debounce time in seconds
 #debounceSeconds = 0.01
-debounceSeconds = 0.5
+debounceSeconds = 1
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(shutdownPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
@@ -63,8 +63,8 @@ def buttonStateChanged(pin):
               call(['shutdown', '-h', 'now'], shell=False)
 
 # subscribe to button presses
-#GPIO.add_event_detect(shutdownPin, GPIO.BOTH, callback=buttonStateChanged, bouncetime=100)
-GPIO.add_event_detect(shutdownPin, GPIO.BOTH, callback=buttonStateChanged)
+GPIO.add_event_detect(shutdownPin, GPIO.BOTH, callback=buttonStateChanged, bouncetime=400)
+#GPIO.add_event_detect(shutdownPin, GPIO.BOTH, callback=buttonStateChanged)
 
 while True:
          # sleep to reduce unnecessary CPU usage
