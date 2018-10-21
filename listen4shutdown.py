@@ -62,7 +62,8 @@ def buttonStateChanged(pin):
               call(['shutdown', '-h', 'now'], shell=False)
 
 # subscribe to button presses
-GPIO.add_event_detect(shutdownPin, GPIO.BOTH, callback=buttonStateChanged, bouncetime=400)
+GPIO.add_event_detect(shutdownPin, GPIO.BOTH, callback=buttonStateChanged, bouncetime=100)
+#GPIO.add_event_detect(shutdownPin, GPIO.BOTH, callback=buttonStateChanged)
 
 while True:
          # sleep to reduce unnecessary CPU usage
