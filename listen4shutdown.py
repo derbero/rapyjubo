@@ -29,6 +29,7 @@ GPIO.setup(shutdownPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(ledPin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 buttonPressedTime = datetime.now()
+elapsed = 0
 
 def buttonStateChanged(pin):
  print("button pressed")
@@ -46,6 +47,7 @@ def buttonStateChanged(pin):
          #if buttonPressedTime is not None:
          elapsed = (datetime.now() - buttonPressedTime).total_seconds()
          buttonPressedTime = datetime.now()
+ 
  if elapsed >= debounceSeconds:
          # button pressed for a shorter time, also shutdown
          # toggle / blink ledPin for a while
