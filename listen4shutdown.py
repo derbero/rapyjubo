@@ -13,7 +13,7 @@ from time import sleep
 
 # pushbutton: NC connected to GPIO 4 (former entry: 27), normally closed, and opens at button press
 # we want a shutdown if button is pressed meaning  GPIO 4 (former entry: 27) opens
-shutdownPin = 4 
+shutdownPin = 04
 
 # power button has a LED that is connected to GND and GPIO 23
 # goal is to let it blink for some time when we are shutting down
@@ -24,7 +24,7 @@ ledState = False
 debounceSeconds = 0.01
 
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(shutdownPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(shutdownPin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 #GPIO.setup(shutdownPin, GPIO.IN)
 #GPIO.setup(shutdownPin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(ledPin, GPIO.OUT, initial = 0)
