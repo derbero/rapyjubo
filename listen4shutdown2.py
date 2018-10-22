@@ -37,7 +37,7 @@ elapsed = 0
 
 def buttonStateChanged(pin):
  ledState = False
- print("button pressed")
+ #print("button pressed")
  global buttonPressedDown
  global buttonPressedReleased
  global buttonPressedDelta
@@ -62,7 +62,7 @@ def buttonStateChanged(pin):
               call(['shutdown', '-h', 'now'], shell=False)
 
 # subscribe to button presses
-GPIO.add_event_detect(shutdownPin, GPIO.BOTH, callback=buttonStateChanged, bouncetime=20)
+GPIO.add_event_detect(shutdownPin, GPIO.BOTH, callback=buttonStateChanged, bouncetime=200)
 #GPIO.add_event_detect(shutdownPin, GPIO.BOTH, callback=buttonStateChanged)
 
 try:
