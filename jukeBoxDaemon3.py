@@ -199,6 +199,12 @@ def mpdConnect(client, con_id):
    print("trying to connect to mpd...")
    try:
        client.connect(**con_id)
+       print("trying to setvol(10)...")
+       try:
+           client.setvol(10)
+       except:
+           print("... mpd setvol(10) failed.")
+           return False
    except SocketError as err:
        print("... mpd connection FAILED: " + str(err))
        return False
