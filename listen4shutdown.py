@@ -62,7 +62,7 @@ def buttonStateChanged(pin):
                   GPIO.output(ledPin, ledState)
                   sleep(0.1)
               # shutdown
-              call(['shutdown', '-h', 'now'], shell=False)
+              call(['sudo shutdown', '-h', 'now'], shell=False)
 
 # subscribe to button presses
 GPIO.add_event_detect(shutdownPin, GPIO.BOTH, callback=buttonStateChanged, bouncetime=400)
