@@ -49,7 +49,7 @@ def buttonStateChanged(pin):
  else:
          print("button is released")
          buttonPressedReleased = time.time()
-         buttonPressedDelta = buttonPressedDown - buttonPressedReleased
+         buttonPressedDelta = buttonPressedReleased - buttonPressedDown
          print ("buttonPressedDelta: " + str(buttonPressedDelta))
 
          if buttonPressedDelta >= deltaToShutdown:
@@ -62,7 +62,7 @@ def buttonStateChanged(pin):
               call(['shutdown', '-h', 'now'], shell=False)
 
 # subscribe to button presses
-GPIO.add_event_detect(shutdownPin, GPIO.BOTH, callback=buttonStateChanged, bouncetime=200)
+GPIO.add_event_detect(shutdownPin, GPIO.BOTH, callback=buttonStateChanged, bouncetime=100)
 #GPIO.add_event_detect(shutdownPin, GPIO.BOTH, callback=buttonStateChanged)
 
 try:
