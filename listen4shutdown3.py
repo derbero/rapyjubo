@@ -67,7 +67,8 @@ def buttonStateChanged(pin):
 
 # subscribe to button presses
 #GPIO.add_event_detect(shutdownPin, GPIO.BOTH, callback=buttonStateChanged, bouncetime=200)
-GPIO.add_event_detect(shutdownPin, GPIO.BOTH, callback=buttonStateChanged, bouncetime=200)
+#GPIO.add_event_detect(shutdownPin, GPIO.BOTH, callback=buttonStateChanged, bouncetime=200)
+GPIO.add_event_detect(shutdownPin, GPIO.FALLING, callback=buttonStateChanged, bouncetime=200)
 #GPIO.add_event_detect(shutdownPin, GPIO.BOTH, callback=buttonStateChanged)
 
 try:
