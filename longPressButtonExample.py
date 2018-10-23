@@ -32,7 +32,8 @@ pressTick = pi.get_current_tick()  # initializing var
 pi.set_mode(gpio, pigpio.INPUT)
 pi.set_pull_up_down(gpio, pigpio.PUD_UP)  # this depends on how the switch is connected
 pi.set_glitch_filter(gpio, 300)
-cb = pi.callback(gpio, pigpio.RISING_EDGE, intCallback)
+#cb = pi.callback(gpio, pigpio.RISING_EDGE, intCallback)
+cb = pi.callback(gpio, pigpio.FALLING_EDGE, intCallback)
 
 
 
