@@ -1,8 +1,6 @@
 [Unit]
 Description=My Shutdown Service
 After=multi-user.target
-After=jukeboxdaemon.service
-Wants=jukeboxdaemon.service
 
 [Service]
 Type=idle
