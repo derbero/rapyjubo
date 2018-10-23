@@ -10,10 +10,16 @@ from subprocess import call
 from datetime import datetime
 import time
 from time import sleep
+import logging
 
 # pushbutton: NC connected to GPIO 4 (former entry: 27), normally closed, and opens at button press
 # we want a shutdown if button is pressed meaning  GPIO 4 (former entry: 27) opens
 shutdownPin = 4
+
+######### LOGGING #########
+logging.basicConfig(filename='listen4shutdown.log',level=logging.DEBUG)
+#########################################
+
 
 # power button has a LED that is connected to GND and GPIO 23
 # goal is to let it blink for some time when we are shutting down
@@ -50,13 +56,16 @@ def buttonStateChanged(pin):
          if (buttonPressedFirst == 0) or (time.time() - buttonPressedFirst > resetFirstButtonPressTime):
              print("FIRST button press")
              buttonPressedFirst = time.time()
+             logging.info("FIRST button press: " + str(buttonPressedFirst))
          else:
             print("SECOND button press")
             buttonPressedSecond = time.time()
+            logging.info("SECOND button press: " + str(buttonPressedSecond))
             buttonPressedDelta = buttonPressedSecond - buttonPressedFirst
             buttonPressedFirst = 0
             if buttonPressedDelta <= deltaToShutdown:
                 print("BOTH button presses happenend within one second; delta: " + str(buttonPressedDelta))
+                logging.info("BOTH button presses happenend within one second; delta: " + str(buttonPressedDelta))
                 # toggle / blink ledPin for a while
                 for i in range(1, 11):
                     ledState = not ledState
