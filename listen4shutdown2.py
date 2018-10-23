@@ -44,7 +44,7 @@ def buttonStateChanged(pin):
  global buttonPressedDelta
 
 # if not (GPIO.input(pin)):
- if GPIO.input(shutdownPin) == 0:
+ if GPIO.input(shutdownPin) == 1:
          print("button is pressed")
          buttonPressedDown = time.time()
  else:
