@@ -22,8 +22,10 @@ ledState = True
 
 # button debounce time in seconds
 deltaToShutdown = 1
+resetFirstButtonPressTime = 2
+
 buttonPressedFirst = 0
-buttonPressedSecond= 0
+buttonPressedSecond = 0
 buttonPressedDelta = 0
 
 GPIO.setmode(GPIO.BCM)
@@ -45,9 +47,9 @@ def buttonStateChanged(pin):
 
 # if not (GPIO.input(pin)):
  if GPIO.input(shutdownPin) == 1:
-         print("FIRST button press")
-         if buttonPressedFirst == 0:
-            buttonPressedFirst = time.time()
+         if (buttonPressedFirst == 0) or (time.time() - buttonPressedFirst > resetFirstButtonPressTime):
+             print("FIRST button press")
+             buttonPressedFirst = time.time()
          else:
             print("SECOND button press")
             buttonPressedSecond = time.time()
