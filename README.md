@@ -113,7 +113,9 @@ sudo reboot
 
 
 
-
+kleine Helfer
+Prozesse mit USer anzeigen 
+> ps aux
 
 <h2>Inspiring projects:</h2>
 https://blog.mwiedemeyer.de/post/2017/Musikbox-fur-Kind-2/
