@@ -22,7 +22,7 @@ shutdownPin = 4
 def setup_custom_logger(name):
     formatter = logging.Formatter(fmt='%(asctime)s %(levelname)-8s %(message)s',
                                   datefmt='%Y-%m-%d %H:%M:%S')
-    handler = logging.FileHandler('listen4shutdown_running.log', mode='w')
+    handler = logging.FileHandler('/home/pi/rapyjubo/listen4shutdown.log', mode='w')
     handler.setFormatter(formatter)
     screen_handler = logging.StreamHandler(stream=sys.stdout)
     screen_handler.setFormatter(formatter)
@@ -76,7 +76,7 @@ def buttonStateChanged(pin):
          else:
             print("SECOND button press")
             buttonPressedSecond = time.time()
-            logger.info("SECOND button press: " + str(buttonPressedSecond)) 
+            logger.info("SECOND button press: " + str(buttonPressedSecond))
             buttonPressedDelta = buttonPressedSecond - buttonPressedFirst
             buttonPressedFirst = 0
             if buttonPressedDelta <= deltaToShutdown:
