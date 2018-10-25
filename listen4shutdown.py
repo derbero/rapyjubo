@@ -11,13 +11,27 @@ from datetime import datetime
 import time
 from time import sleep
 import logging
+import system as sys
 
 # pushbutton: NC connected to GPIO 4 (former entry: 27), normally closed, and opens at button press
 # we want a shutdown if button is pressed meaning  GPIO 4 (former entry: 27) opens
 shutdownPin = 4
 
 ######### LOGGING #########
-logging.basicConfig(filename='listen4shutdown.log',level=logging.DEBUG)
+#logging.basicConfig(filename='listen4shutdown_running.log',level=logging.DEBUG)
+def setup_custom_logger(name):
+    formatter = logging.Formatter(fmt='%(asctime)s %(levelname)-8s %(message)s',
+                                  datefmt='%Y-%m-%d %H:%M:%S')
+    handler = logging.FileHandler('listen4shutdown_running.log', mode='w')
+    handler.setFormatter(formatter)
+    screen_handler = logging.StreamHandler(stream=sys.stdout)
+    screen_handler.setFormatter(formatter)
+    logger = logging.getLogger(name)
+    logger.setLevel(logging.DEBUG)
+    logger.addHandler(handler)
+    logger.addHandler(screen_handler)
+    return logger
+logger = setup_custom_logger('myapp')
 #########################################
 
 
@@ -28,6 +42,7 @@ ledState = True
 
 # button debounce time in seconds
 deltaToShutdown = 1
+# when second button is not pressed within 2 seconds, set back time of first button press
 resetFirstButtonPressTime = 2
 
 buttonPressedFirst = 0
@@ -43,6 +58,7 @@ GPIO.setup(ledPin, GPIO.OUT, initial=0)
 
 buttonPressedTime = datetime.now()
 elapsed = 0
+
 
 def buttonStateChanged(pin):
  ledState = False
