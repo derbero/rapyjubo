@@ -12,6 +12,7 @@ import time
 from time import sleep
 import logging
 import sys
+import os
 
 # pushbutton: NC connected to GPIO 4 (former entry: 27), normally closed, and opens at button press
 # we want a shutdown if button is pressed meaning  GPIO 4 (former entry: 27) opens
@@ -88,7 +89,8 @@ def buttonStateChanged(pin):
                     GPIO.output(ledPin, ledState)
                     sleep(0.1)
                 # shutdown
-                call(['shutdown', '-h', 'now'], shell=False)
+                #call(['shutdown', '-h', 'now'], shell=False)
+                os.system("/usr/bin/sudo /sbin/shutdown -h now")
  else:
          print("BUTTON released - not HANDLING THAT")
 
