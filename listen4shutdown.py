@@ -76,7 +76,7 @@ def buttonStateChanged(pin):
          else:
             print("SECOND button press")
             buttonPressedSecond = time.time()
-            logger.info("SECOND button press: " + str(buttonPressedSecond))
+            logger.info("SECOND button press: " + str(buttonPressedSecond)) 
             buttonPressedDelta = buttonPressedSecond - buttonPressedFirst
             buttonPressedFirst = 0
             if buttonPressedDelta <= deltaToShutdown:
