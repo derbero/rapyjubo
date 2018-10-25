@@ -5,6 +5,9 @@ After=multi-user.target
 [Service]
 Type=idle
 ExecStart=/usr/bin/python /home/pi/rapyjubo/listen4shutdown.py > /home/pi/rapyjubo/listen4shutdown.log 2>&1
+KillMode=process
+Restart=on-failure
+RestartSec=3s
 
 [Install]
 WantedBy=multi-user.target
