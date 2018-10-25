@@ -72,16 +72,16 @@ def buttonStateChanged(pin):
          if (buttonPressedFirst == 0) or (time.time() - buttonPressedFirst > resetFirstButtonPressTime):
              print("FIRST button press")
              buttonPressedFirst = time.time()
-             logging.info("FIRST button press: " + str(buttonPressedFirst))
+             logger.info("FIRST button press: " + str(buttonPressedFirst))
          else:
             print("SECOND button press")
             buttonPressedSecond = time.time()
-            logging.info("SECOND button press: " + str(buttonPressedSecond))
+            logger.info("SECOND button press: " + str(buttonPressedSecond))
             buttonPressedDelta = buttonPressedSecond - buttonPressedFirst
             buttonPressedFirst = 0
             if buttonPressedDelta <= deltaToShutdown:
                 print("BOTH button presses happenend within one second; delta: " + str(buttonPressedDelta))
-                logging.info("BOTH button presses happenend within one second; delta: " + str(buttonPressedDelta))
+                logger.info("BOTH button presses happenend within one second; delta: " + str(buttonPressedDelta))
                 # toggle / blink ledPin for a while
                 for i in range(1, 11):
                     ledState = not ledState
@@ -105,3 +105,4 @@ try:
 except KeyboardInterrupt:
   GPIO.cleanup()
   print("\nBye!")
+  logger.info("----- CLEAN EXIT -----")
