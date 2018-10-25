@@ -11,7 +11,7 @@ from datetime import datetime
 import time
 from time import sleep
 import logging
-import system as sys
+import sys
 
 # pushbutton: NC connected to GPIO 4 (former entry: 27), normally closed, and opens at button press
 # we want a shutdown if button is pressed meaning  GPIO 4 (former entry: 27) opens
