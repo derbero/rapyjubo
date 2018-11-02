@@ -95,10 +95,14 @@ Into that file copy and paste this:
 <br>
 Now move that file to /lib/systemd/system/jukeboxdaemon.service.
 Set permisson to 644:
-sudo chmod 644 /lib/systemd/system/sample.service
+<code>
+<br>$ sudo chmod 644 /lib/systemd/system/sample.service</br>
+</code>
 Now the unit file has been defined we can tell systemd to start it during the boot sequence :
-sudo systemctl daemon-reload
-sudo systemctl enable jukeboxdaemon.service
+<code>
+<br>$ sudo systemctl daemon-reload</br>
+<br>$ sudo systemctl enable jukeboxdaemon.service</br>
+</code>
 Reboot the Pi and your custom service should run:
 sudo reboot
 <br>Start / stop / status service 
