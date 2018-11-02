@@ -352,7 +352,8 @@ def mpdVolumeUp(channel):
     print()
     print("---------- BEGIN ---- mpdVolumeUp ------------")
     # set volume to +10
-    if (int(mpd_client.status()['volume']) <= 90):
+    logger.info('setting MPD Volume up -- FROM: ' + str(mpd_client.status()['volume']))
+	if (int(mpd_client.status()['volume']) <= 90):
         mpd_client.setvol(int(mpd_client.status()['volume']) + VOLUME_STEP)
         print ("player volume set up to " + str(mpd_client.status()['volume']))
     else:
@@ -361,11 +362,13 @@ def mpdVolumeUp(channel):
             print ("player volume set up to " + str(mpd_client.status()['volume']))
         else:
             print("player already set to maximum volume: " + str(mpd_client.status()['volume']))
+    logger.info('setting MPD Volume up -- TO:   ' + str(mpd_client.status()['volume']))
 
 
 def mpdVolumeDown(channel):
     # set volume to -10
     print()
+    logger.info('setting MPD Volume down -- FROM: ' + str(mpd_client.status()['volume']))
     if (int(mpd_client.status()['volume']) >= 10):
         mpd_client.setvol(int(mpd_client.status()['volume']) - VOLUME_STEP)
         print("player volume set down to " + str(mpd_client.status()['volume']))
@@ -375,13 +378,16 @@ def mpdVolumeDown(channel):
             print ("player volume set up to " + str(mpd_client.status()['volume']))
         else:
             print("player already set to minimum volume: " + str(mpd_client.status()['volume']))
+    logger.info('setting MPD Volume down -- TO:   ' + str(mpd_client.status()['volume']))
 
 
 def mpdPlayPauseToggle(channel):
     # toggle play pause
     print()
+    logger.info('setting MPD play/pause FROM:   ' + str(mpd_client.status()['state']))
     mpd_client.pause()
     print("player in state " + str(mpd_client.status()['state']))
+    logger.info('setting MPD play/pause TO  :   ' + str(mpd_client.status()['state']))
 
 
 def mpdNext(channel):
@@ -391,8 +397,10 @@ def mpdNext(channel):
     if mpdPlaylistHasNextSong(mpd_client) is True:
         mpd_client.next()
         print("player has gone to next song " + str(mpd_client.status()['song']))
+	    logger.info('player has gone to next song ' + str(mpd_client.status()['song']))
     else:
         print("no next song in playlist. staying with actual song: " + str(mpd_client.status()['song']))
+	    logger.info('no next song in playlist. staying with actual song: ' + str(mpd_client.status()['song']))
 
 
 def mpdPrevious(channel):
@@ -401,8 +409,10 @@ def mpdPrevious(channel):
     if mpdPlaylistHasPreviousSong(mpd_client) is True:
         mpd_client.previous()
         print ("player has gone to previous song " + str(mpd_client.status()['song']))
+	    logger.info('player has gone to previous song ' + str(mpd_client.status()['song']))
     else:
         print("no previous song in playlist. staying with actual song: " + str(mpd_client.status()['song']))
+	    logger.info('no previous song in playlist. staying with actual song: ' + str(mpd_client.status()['song']))
 ##########################################
 # callback functions for the buttons
 # end
@@ -416,25 +426,32 @@ def mpdLoadAndPlayPlaylist(playlistId):
         print("trying to clear playlist ...")
         mpd_client.clear()
         print("... playlist cleared")
+		logger.info('playlist cleared')
         try:
             print()
             print("trying to load playlist..." + str(playlistId))
             mpd_client.load(str(playlistId))
             print("... playlist " + str(playlistId) + " loaded successfully")
+			logger.info('... playlist ' + str(playlistId) + ' loaded successfully')
             try:
                 print()
                 print("trying to start playing ...")
+				logger.info('trying to start playing ...')
                 mpd_client.play(0)
                 print("... playing")
+				logger.info('... playing')
                 return True
             except:
                 print("... error while trying to play")
+				logger.info('... error while trying to play')
                 return False
         except:
             print("... error while loading playlist")
+			logger.info('... error while loading playlist')
             return False
     except:
         print("... error while clearing playlist")
+		logger.info('... error while clearing playlist')
         return False
 
 
@@ -495,12 +512,13 @@ while (True):
                     #rfid_input = str(raw_input('Enter your playlist:'))
                     #python2: raw_input; python3: input
     	            print("Card read: " + rfid_input)
+					logger.info('RFID card read with ID: ' + str(rfid_input))
                 except EOFError:
                     continue
                     # hier sollte noch ein logging hin, damit die IDs der Karten irgendwo sichtbar werden
                 #logging.debug('This message should go to the log file')
-                logging.info('RFID card read with ID: ' + str(rfid_input))
-                #logging.warning('And this, too')
+                #logging.info('RFID card read with ID: ' + str(rfid_input))
+				#logging.warning('And this, too')
                 if(rfid_input == 'x'):
                     break
                 playlistLoadedSuccessfully = mpdLoadAndPlayPlaylist(rfid_input)
