@@ -23,7 +23,21 @@ from evdev import InputDevice, categorize, ecodes
 rfidreader = "/dev/input/event0"
 
 ######### LOGGING #########
-logging.basicConfig(filename='jukeboxLog.log',level=logging.DEBUG)
+#logging.basicConfig(filename='jukeboxLog.log',level=logging.DEBUG)
+def setup_custom_logger(name):
+    formatter = logging.Formatter(fmt='%(asctime)s %(levelname)-8s %(message)s',
+                                  datefmt='%Y-%m-%d %H:%M:%S')
+#    handler = logging.FileHandler('/home/pi/rapyjubo/listen4shutdown_run.log', mode='w')
+    handler = logging.FileHandler('/var/log/rapyjubo/jukebox.log', mode='w')
+    handler.setFormatter(formatter)
+    screen_handler = logging.StreamHandler(stream=sys.stdout)
+    screen_handler.setFormatter(formatter)
+    logger = logging.getLogger(name)
+    logger.setLevel(logging.DEBUG)
+    logger.addHandler(handler)
+    logger.addHandler(screen_handler)
+    return logger
+logger = setup_custom_logger('jukebox')
 #########################################
 
 ######### USING_MANUAL_INPUT #########
