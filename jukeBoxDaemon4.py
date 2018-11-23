@@ -579,6 +579,7 @@ while (True):
         print ("mpd status " + str(mpd_client.status()))
 #    except:
 #    print("Exception raised.")
+        sleep(4)
     except KeyboardInterrupt: #Strg-C wird gedrückt
         print("Exception raised.")
         print()
