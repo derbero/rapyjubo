@@ -54,8 +54,8 @@ PORT = '6601' #
 PASSWORD = False #
 CON_ID = {'host':HOST, 'port':PORT} #
 
-VOLUME_STEP = 2
-
+VOLUME_STEP = 1
+VOLUME_MAX = 20
 
 # POWEROFF_TIME = 10
 # OUT_PIN_POWER = 7               # GPIO04: 07, GND: 06, POWER: 04 (5V)
@@ -82,11 +82,11 @@ GPIO.setmode(GPIO.BOARD)
 #GPIO.setup(IN_PIN_TRACK_PREVIOUS, GPIO.IN)
 #GPIO.setup(IN_PIN_TOGGLE_PLAY_PAUSE, GPIO.IN)
 
-GPIO.setup(IN_PIN_VOLUME_UP, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-GPIO.setup(IN_PIN_VOLUME_DOWN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-GPIO.setup(IN_PIN_TRACK_NEXT, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-GPIO.setup(IN_PIN_TRACK_PREVIOUS, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-GPIO.setup(IN_PIN_TOGGLE_PLAY_PAUSE, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(IN_PIN_VOLUME_UP, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(IN_PIN_VOLUME_DOWN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(IN_PIN_TRACK_NEXT, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(IN_PIN_TRACK_PREVIOUS, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(IN_PIN_TOGGLE_PLAY_PAUSE, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 
 # To set up a channel as an output:
@@ -215,7 +215,7 @@ def mpdConnect(client, con_id):
        client.connect(**con_id)
        print("trying to setvol(10)...")
        try:
-           client.setvol(10)
+           client.setvol(4)
        except:
            print("... mpd setvol(10) failed.")
            return False
@@ -353,11 +353,11 @@ def mpdVolumeUp(channel):
     print("---------- BEGIN ---- mpdVolumeUp ------------")
     # set volume to +10
     logger.info('setting MPD Volume up -- FROM: ' + str(mpd_client.status()['volume']))
-    if (int(mpd_client.status()['volume']) <= 90):
+    if (int(mpd_client.status()['volume']) <= (VOLUME_MAX - VOLUME_STEP)):
         mpd_client.setvol(int(mpd_client.status()['volume']) + VOLUME_STEP)
         print ("player volume set up to " + str(mpd_client.status()['volume']))
     else:
-        if(int(mpd_client.status()['volume']) < 100):
+        if(int(mpd_client.status()['volume']) < VOLUME_MAX):
             mpd_client.setvol(100)
             print ("player volume set up to " + str(mpd_client.status()['volume']))
         else:
@@ -366,16 +366,18 @@ def mpdVolumeUp(channel):
 
 
 def mpdVolumeDown(channel):
+    print()
+    print("---------- BEGIN ---- mpdVolumeDown ------------")
     # set volume to -10
     print()
     logger.info('setting MPD Volume down -- FROM: ' + str(mpd_client.status()['volume']))
-    if (int(mpd_client.status()['volume']) >= 10):
+    if (int(mpd_client.status()['volume']) >= VOLUME_STEP):
         mpd_client.setvol(int(mpd_client.status()['volume']) - VOLUME_STEP)
         print("player volume set down to " + str(mpd_client.status()['volume']))
     else:
         if (int(mpd_client.status()['volume']) > 0):
             mpd_client.setvol(0)
-            print ("player volume set up to " + str(mpd_client.status()['volume']))
+            print ("player volume set down to " + str(mpd_client.status()['volume']))
         else:
             print("player already set to minimum volume: " + str(mpd_client.status()['volume']))
     logger.info('setting MPD Volume down -- TO:   ' + str(mpd_client.status()['volume']))
