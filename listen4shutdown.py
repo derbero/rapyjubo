@@ -56,7 +56,7 @@ GPIO.setup(shutdownPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 #GPIO.setup(shutdownPin, GPIO.IN)
 #GPIO.setup(shutdownPin, GPIO.IN)
 #GPIO.setup(shutdownPin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-GPIO.setup(ledPin, GPIO.OUT, initial=1)
+GPIO.setup(ledPin, GPIO.OUT, initial=1) #initial 1: when started the LED will be switched on.
 
 buttonPressedTime = datetime.now()
 elapsed = 0
