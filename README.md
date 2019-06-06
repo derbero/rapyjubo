@@ -9,20 +9,23 @@ a music juke box project with a headless Rasperry Pi coded in Python.
 
 <h2>configuration:</h2>
 <h3>alsa / sound related things:</h3>
-
-List USB devices:
+<br>
+<p>List USB devices:</p>
 The first entry in the list is the RFID reader: vendor: ffff; product: 0035
 Second entry is the sound card: vendor: 0d8c; product: 0014 
+<br>
+<code>
 $ lsusb
-Bus 001 Device 004: ID ffff:0035
-Bus 001 Device 006: ID 0d8c:0014 C-Media Electronics, Inc.
-Bus 001 Device 005: ID 0424:7800 Standard Microsystems Corp.
-Bus 001 Device 003: ID 0424:2514 Standard Microsystems Corp. USB 2.0 Hub
-Bus 001 Device 002: ID 0424:2514 Standard Microsystems Corp. USB 2.0 Hub
-Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+<ul>Bus 001 Device 004: ID ffff:0035</ul>
+<ul>Bus 001 Device 006: ID 0d8c:0014 C-Media Electronics, Inc.</ul>
+<ul>Bus 001 Device 005: ID 0424:7800 Standard Microsystems Corp.</ul>
+<ul>Bus 001 Device 003: ID 0424:2514 Standard Microsystems Corp. USB 2.0 Hub</ul>
+<ul>Bus 001 Device 002: ID 0424:2514 Standard Microsystems Corp. USB 2.0 Hub</ul>
+<ul>Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub</ul>
+</code>
 
 make the USB sound card index=0
-$ sudo nano /etc/modprobe.d/alsa-base.conf:
+$ sudo nano /etc/modprobe.d/alsa-base.conf: (changed in phoniebox, too)
 options snd_usb_audio index=0
 options snd_bcm2835 index=1
 
@@ -34,7 +37,7 @@ $ cat /proc/asound/cards
                       bcm2835 ALSA
 
 The 0 is the USB sound card index I set a little earlier
-$ sudo nano /etc/asound.conf
+$ sudo nano /etc/asound.conf (changed in phoniebox, too)
 defaults.pcm.!card 0
 defaults.ctl.!card 0
 
